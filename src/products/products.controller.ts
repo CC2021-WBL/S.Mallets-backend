@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { Role } from 'src/auth/types/role.enum';
 import { Roles } from 'src/decorators/roles.decorators';
 
@@ -56,12 +48,5 @@ export class ProductsController {
       price: price,
     });
     return updatedProduct;
-  }
-
-  @Delete(':prodId')
-  @Roles(Role.Admin)
-  deleteProduct(@Param('prodId') prodId: number) {
-    const deletedProduct = this.productsService.deleteProduct(prodId);
-    return deletedProduct;
   }
 }

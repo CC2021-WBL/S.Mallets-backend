@@ -25,16 +25,12 @@ export class ProductsService {
     return { ...product };
   }
 
+  // TODO: it should be updated
   async updateProduct(product: Product) {
     const prodFromDB = await this.findProductById(product.id);
+    console.log(prodFromDB);
     // logic for updating product
     return product;
-  }
-
-  async deleteProduct(prodId: number) {
-    const prodFromDB = await this.findProductById(prodId);
-    //logic for deleting product
-    return prodFromDB;
   }
 
   private async findProductById(id: number) {
