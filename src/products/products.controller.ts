@@ -7,7 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { Role } from 'src/auth/role.enum';
+import { Role } from 'src/auth/types/role.enum';
 import { Roles } from 'src/decorators/roles.decorators';
 
 import { ProductsService } from './products.service';

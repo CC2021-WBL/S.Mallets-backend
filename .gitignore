@@ -34,9 +34,10 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# env
+# env and other secret data
 .env
 .env.local
+id_rsa_priv.pem
 
 # typeorm
 .ormconfig.json

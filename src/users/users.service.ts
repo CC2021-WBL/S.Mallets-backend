@@ -1,25 +1,61 @@
+import { PreCreateUser } from './users.types';
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-// mock for model
-export type User = any;
+import { genPassword } from '../auth/cryptography/passwordUtils';
+import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
-  // mock of DB
-  private readonly users = [
-    {
-      userId: 1,
-      email: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      email: 'maria',
-      password: 'guess',
-    },
-  ];
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
 
-  async findOne(email: string): Promise<User | undefined> {
-    return this.users.find((user) => user.email === email);
+  async findOneById(id: string) {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+    return user;
+  }
+
+  //TODO: type string of value --> value should have type as proper field in User
+  async findOneByCurrentField(fieldName: keyof User, value: string) {
+    console.log(fieldName);
+    console.log(value);
+    const user = await this.usersRepository.findOne({
+      where: {
+        [fieldName]: value,
+      },
+    });
+    console.log(user);
+    return user;
+  }
+  async getAll() {
+    const users = await this.usersRepository.find();
+    return users;
+  }
+
+  async create(userData: PreCreateUser): Promise<any> {
+    try {
+      const hashSaltObj = await genPassword(userData.password);
+      const user = await this.usersRepository.create({
+        email: userData.email,
+        name: userData.name,
+        surname: userData.surname,
+        hash: hashSaltObj.hash,
+        salt: hashSaltObj.salt,
+      });
+      if (user) {
+        return user;
+      }
+      return null;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 }
