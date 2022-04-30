@@ -19,12 +19,12 @@ export class ProductsController {
   @Post()
   @Roles(Role.Admin)
   addProduct(
-    @Body('prodName') prodName: string,
+    @Body('productName') productName: string,
     @Body('description') description: string,
     @Body('price') price: number,
   ) {
     const addedProductId = this.productsService.addProduct({
-      prodName: prodName,
+      productName: productName,
       description: description,
       price: price,
     });
@@ -37,21 +37,21 @@ export class ProductsController {
   }
 
   @Get(':prodId')
-  getProduct(@Param('prodId') prodId: string) {
+  getProduct(@Param('prodId') prodId: number) {
     return this.productsService.getSingleProduct(prodId);
   }
 
   @Patch(':prodId')
   @Roles(Role.Admin)
   updateProduct(
-    @Param('prodId') prodId: string,
-    @Body('prodName') prodName: string,
+    @Param('prodId') prodId: number,
+    @Body('productName') productName: string,
     @Body('description') description: string,
     @Body('price') price: number,
   ) {
     const updatedProduct = this.productsService.updateProduct({
       id: prodId,
-      prodName: prodName,
+      productName: productName,
       description: description,
       price: price,
     });
@@ -60,7 +60,7 @@ export class ProductsController {
 
   @Delete(':prodId')
   @Roles(Role.Admin)
-  deleteProduct(@Param('prodId') prodId: string) {
+  deleteProduct(@Param('prodId') prodId: number) {
     const deletedProduct = this.productsService.deleteProduct(prodId);
     return deletedProduct;
   }

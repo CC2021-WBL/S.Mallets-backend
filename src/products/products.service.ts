@@ -1,49 +1,44 @@
+import { Product } from './product.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
-
-import { Product } from './product.model';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductsService {
-  private products: Product[] = [];
+  constructor(
+    @InjectRepository(Product)
+    private productRepository: Repository<Product>,
+  ) {}
 
-  addProduct(product: Omit<Product, 'id'>) {
-    const prodId = uuidv4();
-    //creating Product instace
-    const newProduct = new Product(
-      prodId,
-      product.prodName,
-      product.description,
-      product.price,
-    );
-    // adding product to DB - here mock - to array products
-    this.products.push(newProduct);
-    return prodId;
+  async addProduct(product: Omit<Product, 'id'>) {
+    const prepairedProduct = await this.productRepository.create(product);
+    const addedProduct = await this.productRepository.save(prepairedProduct);
+    return addedProduct;
   }
 
-  getAllProducts() {
-    return [...this.products];
+  async getAllProducts() {
+    return this.productRepository.find();
   }
 
-  getSingleProduct(prodId: string) {
+  async getSingleProduct(prodId: number) {
     const product = this.findProductById(prodId);
     return { ...product };
   }
 
-  updateProduct(product: Product) {
-    const prodFromDB = this.findProductById(product.id);
+  async updateProduct(product: Product) {
+    const prodFromDB = await this.findProductById(product.id);
     // logic for updating product
     return product;
   }
 
-  deleteProduct(prodId: string) {
-    const prodFromDB = this.findProductById(prodId);
+  async deleteProduct(prodId: number) {
+    const prodFromDB = await this.findProductById(prodId);
     //logic for deleting product
     return prodFromDB;
   }
 
-  private findProductById(id: string) {
-    const product = this.products.find((product) => product.id === id);
+  private async findProductById(id: number) {
+    const product = await this.productRepository.findOne(id);
     if (!product) {
       throw new NotFoundException('could not find product');
     }

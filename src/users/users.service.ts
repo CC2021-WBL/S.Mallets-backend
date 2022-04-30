@@ -42,15 +42,16 @@ export class UsersService {
   async create(userData: PreCreateUser): Promise<any> {
     try {
       const hashSaltObj = await genPassword(userData.password);
-      const user = await this.usersRepository.create({
+      const prepairedUser = await this.usersRepository.create({
         email: userData.email,
         name: userData.name,
         surname: userData.surname,
         hash: hashSaltObj.hash,
         salt: hashSaltObj.salt,
       });
-      if (user) {
-        return user;
+      const addedUser = await this.usersRepository.save(prepairedUser);
+      if (addedUser) {
+        return addedUser;
       }
       return null;
     } catch (error) {

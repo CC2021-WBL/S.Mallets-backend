@@ -12,7 +12,7 @@ import { Role } from '../auth/types/role.enum';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({ unique: true })
   email: string;
