@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 import { JwtModule } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
@@ -11,13 +9,6 @@ import { LocalStrategy } from './passportStrategies/local.strategy';
 import { PUB_KEY } from './cryptography/id_rsa_pub';
 import { UsersModule } from './../users/users.module';
 
-//import * as fs from 'fs';
-///import * as path from 'path';
-
-//const pathToKey = path.join(__dirname, '.', 'cryptography', 'id_rsa_pub.pem');
-
-//const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
-
 @Module({
   imports: [
     UsersModule,
@@ -25,7 +16,7 @@ import { UsersModule } from './../users/users.module';
     JwtModule.register({
       publicKey: PUB_KEY,
       privateKey: process.env.PRIV_KEY,
-      signOptions: { expiresIn: '7d' },
+      signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],

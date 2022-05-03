@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { verifyPassword } from 'src/auth/cryptography/passwordUtils';
 
+import { PostgresErrorCode } from './../database/postgresErrorCodes.enum';
 import { PreCreateUser } from './../users/users.types';
 import { UsersService } from './../users/users.service';
+import { genPassword } from './cryptography/passwordUtils';
 
 @Injectable()
 export class AuthService {
@@ -13,8 +15,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.findOneByCurrentField('email', email);
-    console.log(user);
+    const user = await this.usersService.findByEmail(email);
     const isValid =
       user && (await verifyPassword(password, user.hash, user.salt));
     if (isValid) {
@@ -36,7 +37,27 @@ export class AuthService {
   }
 
   async register(userData: PreCreateUser): Promise<any> {
-    const user = await this.usersService.create(userData);
-    return user;
+    try {
+      const hashSaltObj = await genPassword(userData.password);
+      const user = await this.usersService.create({
+        ...userData,
+        hash: hashSaltObj.hash,
+        salt: hashSaltObj.salt,
+      });
+      user.hash = undefined;
+      user.salt = undefined;
+      return user;
+    } catch (error: any) {
+      if (error?.code === PostgresErrorCode.UniqueViolation) {
+        throw new HttpException(
+          'User with that email already exists',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw new HttpException(
+        'Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

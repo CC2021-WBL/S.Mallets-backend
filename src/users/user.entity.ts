@@ -12,7 +12,7 @@ import { Role } from '../auth/types/role.enum';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ unique: true })
   email: string;
@@ -23,17 +23,23 @@ export class User {
   @Column()
   surname: string;
 
+  @Column()
+  phoneNumber: number;
+
   @Column({ type: 'enum', enum: Role, default: Role.User })
-  role: Role;
+  role?: Role;
 
   @OneToMany(() => Address, (address) => address.user)
-  addresses: Address[];
+  addresses?: Address[];
 
   @Column()
   hash: string;
 
   @Column()
   salt: string;
+
+  @Column({ default: new Date() })
+  modifiedAt: Date;
 
   @CreateDateColumn()
   createdAt: Date;
