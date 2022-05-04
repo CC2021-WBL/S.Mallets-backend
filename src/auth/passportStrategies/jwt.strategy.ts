@@ -1,25 +1,36 @@
+import { ConfigService } from '@nestjs/config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { Request } from 'express';
 
-import { PUB_KEY } from './../cryptography/id_rsa_pub';
+import { TokenPayload } from '../types/tokenPayload.interface';
+import { UsersService } from './../../users/users.service';
 
-//import * as fs from 'fs';
-//import * as path from 'path';
-
-//const pathToKey = path.join(__dirname, '..', 'cryptography', 'id_rsa_pub.pem');
-//const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly usersService: UsersService,
+  ) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (req: Request) => {
+          if (req && req.cookies) {
+            const jwt = req.cookies.jwt;
+            console.log(jwt);
+            return jwt;
+          }
+          return null;
+        },
+      ]),
       ignoreExpiration: false,
-      secretOrKey: PUB_KEY,
+      secretOrKey: configService.get('PUB_KEY'),
     });
   }
 
-  async validate(payload: any) {
-    return { userId: payload.sub, email: payload.email, role: payload.role };
+  async validate(payload: TokenPayload) {
+    console.log(payload);
+    return this.usersService.findOneById(payload.sub);
   }
 }

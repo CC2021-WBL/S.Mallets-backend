@@ -25,14 +25,6 @@ export class ProductsService {
     return { ...product };
   }
 
-  // TODO: it should be updated
-  async updateProduct(product: Product) {
-    const prodFromDB = await this.findProductById(product.id);
-    console.log(prodFromDB);
-    // logic for updating product
-    return product;
-  }
-
   private async findProductById(id: number) {
     const product = await this.productRepository.findOne(id);
     if (!product) {
