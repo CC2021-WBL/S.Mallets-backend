@@ -35,11 +35,8 @@ export class User {
   @Column()
   hash: string;
 
-  @Column()
-  salt: string;
-
   @Column({ default: new Date() })
-  modifiedAt: Date;
+  modifiedAt?: Date;
 
   @CreateDateColumn()
   createdAt: Date;

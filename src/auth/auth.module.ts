@@ -1,3 +1,4 @@
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
@@ -13,10 +14,16 @@ import { UsersModule } from './../users/users.module';
   imports: [
     UsersModule,
     PassportModule,
-    JwtModule.register({
-      publicKey: PUB_KEY,
-      privateKey: process.env.PRIV_KEY,
-      signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        publicKey: PUB_KEY,
+        privateKey: configService.get('PRIV_KEY'),
+        signOptions: {
+          expiresIn: `${configService.get('JWT_EXPIRATION_TIME')}`,
+        },
+      }),
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
