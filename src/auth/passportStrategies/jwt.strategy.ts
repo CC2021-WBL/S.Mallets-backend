@@ -16,21 +16,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => {
-          if (req && req.cookies) {
-            const jwt = req.cookies.jwt;
-            console.log(jwt);
-            return jwt;
-          }
-          return null;
+          return req?.cookies?.jwt;
         },
       ]),
       ignoreExpiration: false,
-      secretOrKey: configService.get('PUB_KEY'),
+      secretOrKey: configService.get('JWT_SECRET'),
     });
   }
 
   async validate(payload: TokenPayload) {
-    console.log(payload);
     return this.usersService.findOneById(payload.sub);
   }
 }
