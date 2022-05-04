@@ -7,7 +7,6 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './passportStrategies/jwt.strategy';
 import { LocalStrategy } from './passportStrategies/local.strategy';
-import { PUB_KEY } from './cryptography/id_rsa_pub';
 import { UsersModule } from './../users/users.module';
 
 @Module({

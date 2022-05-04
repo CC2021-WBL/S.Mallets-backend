@@ -4,7 +4,6 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 
-import { PUB_KEY } from './../cryptography/id_rsa_pub';
 import { TokenPayload } from '../types/tokenPayload.interface';
 import { UsersService } from './../../users/users.service';
 
