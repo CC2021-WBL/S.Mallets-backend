@@ -31,6 +31,8 @@ import { UsersModule } from './users/users.module';
         DB_NAME_OF_DATABASE: Joi.string().required(),
         SERVER_PORT: Joi.number(),
         JWT_EXPIRATION_TIME: Joi.string().required(),
+        PUB_KEY: Joi.string().required(),
+        PRIV_KEY: Joi.string().required(),
       }),
       isGlobal: true,
     }),

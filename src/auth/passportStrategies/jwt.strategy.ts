@@ -26,7 +26,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         },
       ]),
       ignoreExpiration: false,
-      secretOrKey: PUB_KEY,
+      secretOrKey: configService.get('PUB_KEY'),
     });
   }
 

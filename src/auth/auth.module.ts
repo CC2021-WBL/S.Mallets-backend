@@ -18,7 +18,7 @@ import { UsersModule } from './../users/users.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        publicKey: PUB_KEY,
+        publicKey: configService.get('PUB_KEY'),
         privateKey: configService.get('PRIV_KEY'),
         signOptions: {
           expiresIn: `${configService.get('JWT_EXPIRATION_TIME')}`,
