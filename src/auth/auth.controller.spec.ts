@@ -8,6 +8,7 @@ describe('AuthController', () => {
   let authController: AuthController;
   const mockAuthService = {
     register: jest.fn(async (object) => {
+      delete object.password;
       const resObj = {
         ...object,
         id: 1,
