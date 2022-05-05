@@ -26,6 +26,7 @@ export class UsersService {
   async findByEmail(email: string) {
     const user = await this.usersRepository.findOne({ email });
     if (user) {
+      user.hash = undefined;
       return user;
     }
     throw new HttpException(
@@ -42,6 +43,7 @@ export class UsersService {
         },
       });
       if (user) {
+        user.hash = undefined;
         return user;
       }
     }
@@ -59,6 +61,7 @@ export class UsersService {
     const prepairedUser = await this.usersRepository.create(userData);
     const addedUser = await this.usersRepository.save(prepairedUser);
     if (addedUser) {
+      addedUser.hash = undefined;
       return addedUser;
     }
     return null;

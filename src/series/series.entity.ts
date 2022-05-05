@@ -4,55 +4,36 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { IsBase64, IsNumber, IsString } from 'class-validator';
+import { IsBase64, IsString } from 'class-validator';
 
-import { Series } from './../series/series.entity';
 import { Translation } from '../translations/translation.entity';
 
-@Entity('products')
-export class Product {
+@Entity('series')
+export class Series {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   @IsString()
-  productName: string;
+  seriesName: string;
 
   @OneToOne(() => Translation)
   @JoinColumn()
-  productDescription: Translation;
-
-  @Column()
-  @IsNumber()
-  price: number;
-
-  @Column()
-  @IsNumber()
-  headDiameter: number;
-
-  @Column()
-  @IsNumber()
-  stickLength: number;
-
-  @Column()
-  @IsNumber()
-  weight: number;
+  seriesDescription: Translation;
 
   @Column({
     type: 'text',
   })
   @IsBase64()
-  productImage: string;
+  seriesImage: string;
 
   @OneToOne(() => Translation)
   @JoinColumn()
-  productAltText: Translation;
-
-  @ManyToOne(() => Series)
-  seriesId: Series;
+  seriesAltText: Translation;
 
   @Column({ default: new Date() })
   modifiedAt?: Date;

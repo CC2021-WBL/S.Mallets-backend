@@ -2,11 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { IsEmail, IsInt, IsPositive, Length } from 'class-validator';
 
-import { Address } from './../addresses/address.entity';
+import { Address } from '../addresses/address.entity';
 import { Role } from '../auth/types/role.enum';
 
 @Entity('users')
@@ -15,22 +17,28 @@ export class User {
   id?: number;
 
   @Column({ unique: true })
+  @IsEmail()
   email: string;
 
   @Column()
+  @Length(2, 50)
   name: string;
 
   @Column()
+  @Length(2, 50)
   surname: string;
 
   @Column()
+  @IsInt()
+  @IsPositive()
   phoneNumber: number;
 
   @Column({ type: 'enum', enum: Role, default: Role.User })
   roles?: Role[];
 
-  @OneToMany(() => Address, (address) => address.user)
-  addresses?: Address[];
+  @OneToOne(() => Address)
+  @JoinColumn()
+  address?: Address;
 
   @Column()
   hash: string;
