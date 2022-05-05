@@ -39,5 +39,5 @@ export class User {
   modifiedAt?: Date;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt?: Date;
 }

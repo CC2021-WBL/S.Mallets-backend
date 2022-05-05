@@ -3,7 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { PostgresErrorCode } from './../database/postgresErrorCodes.enum';
-import { PreCreateUser } from './../users/users.types';
+import { PreCreateUser } from '../users/create-user.dto';
 import { TokenPayload } from './types/tokenPayload.interface';
 import { User } from './../users/user.entity';
 import { UsersService } from './../users/users.service';
