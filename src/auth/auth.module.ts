@@ -21,11 +21,12 @@ import { UsersModule } from './../users/users.module';
         signOptions: {
           expiresIn: `${configService.get('JWT_EXPIRATION_TIME')}`,
         },
+        global: true,
       }),
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
-  exports: [AuthService],
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}
