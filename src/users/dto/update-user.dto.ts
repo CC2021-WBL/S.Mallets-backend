@@ -12,16 +12,16 @@ export class UpdateUserDto {
   @IsNotEmpty()
   @Length(2, 50)
   @IsOptional()
-  name: string;
+  name?: string;
 
   @IsString()
   @IsNotEmpty()
   @Length(2, 50)
   @IsOptional()
-  surname: string;
+  surname?: string;
 
   @IsInt()
   @IsPositive()
   @IsOptional()
-  phoneNumber: number;
+  phoneNumber?: number;
 }

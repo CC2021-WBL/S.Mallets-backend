@@ -25,7 +25,6 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   async getById(@Param() { id }: FindByIdParams) {
     const user = await this.usersService.findOneById(Number(id));
-    user.hash = undefined;
     return user;
   }
 

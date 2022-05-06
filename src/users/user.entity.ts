@@ -33,7 +33,7 @@ export class User {
   @IsPositive()
   phoneNumber: number;
 
-  @Column({ type: 'enum', enum: Role, default: Role.User })
+  @Column({ type: 'enum', enum: Role, default: [Role.User] })
   roles?: Role[];
 
   @OneToOne(() => Address)
