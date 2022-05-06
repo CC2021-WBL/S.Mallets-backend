@@ -3,13 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IsBase64, IsString } from 'class-validator';
 
+import { Product } from './../products/product.entity';
 import { Translation } from '../translations/translation.entity';
 
 @Entity('series')
@@ -34,6 +34,9 @@ export class Series {
   @OneToOne(() => Translation)
   @JoinColumn()
   seriesAltText: Translation;
+
+  @OneToMany(() => Product, (product) => product.seriesId)
+  products: Product[];
 
   @Column({ default: new Date() })
   modifiedAt?: Date;

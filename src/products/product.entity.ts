@@ -51,7 +51,7 @@ export class Product {
   @JoinColumn()
   productAltText: Translation;
 
-  @ManyToOne(() => Series)
+  @ManyToOne(() => Series, (series) => series.products)
   seriesId: Series;
 
   @Column({ default: new Date() })
