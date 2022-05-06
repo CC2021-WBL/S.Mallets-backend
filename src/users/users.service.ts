@@ -1,3 +1,4 @@
+import { UpdateUserDto } from './dto/update-user.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -19,14 +20,13 @@ export class UsersService {
     if (!user) {
       throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
     }
-    user.hash = undefined;
+
     return user;
   }
 
   async findByEmail(email: string) {
     const user = await this.usersRepository.findOne({ email });
     if (user) {
-      user.hash = undefined;
       return user;
     }
     throw new HttpException(
@@ -49,15 +49,8 @@ export class UsersService {
     }
     throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
   }
-  async getAll() {
-    const users = await this.usersRepository.find();
-    if (!users) {
-      throw new HttpException('Not found users', HttpStatus.NOT_FOUND);
-    }
-    return users;
-  }
 
-  async create(userData: User): Promise<any> {
+  async create(userData: User): Promise<User | null> {
     const prepairedUser = await this.usersRepository.create(userData);
     const addedUser = await this.usersRepository.save(prepairedUser);
     if (addedUser) {
@@ -65,5 +58,27 @@ export class UsersService {
       return addedUser;
     }
     return null;
+  }
+
+  async updateUser(userData: UpdateUserDto, id: number): Promise<User> {
+    const user = await this.findOneById(id);
+    for (const key in userData) {
+      if (Object.prototype.hasOwnProperty.call(userData, key)) {
+        user[key] = userData[key];
+      }
+    }
+    const updatedUser = await this.usersRepository.save(user);
+    if (!updatedUser) {
+      throw new HttpException('Updating user failed', HttpStatus.BAD_REQUEST);
+    }
+    return updatedUser;
+  }
+
+  async deleteUser(id: number) {
+    const deleteResult = await this.usersRepository.delete(id);
+    if (!deleteResult.affected) {
+      throw new HttpException('user deletion failed', HttpStatus.BAD_REQUEST);
+    }
+    return deleteResult;
   }
 }

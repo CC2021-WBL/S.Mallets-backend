@@ -1,8 +1,10 @@
-import { PreCreateUser } from '../users/create-user.dto';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
   Req,
@@ -19,7 +21,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('register')
-  async register(@Body() userData: PreCreateUser) {
+  async register(@Body() userData: CreateUserDto) {
     const user = await this.authService.register(userData);
     return user;
   }
@@ -31,5 +33,21 @@ export class AuthController {
     const cookie = await this.authService.getCookieWithJwt(req.user);
     res.setHeader('Set-Cookie', cookie);
     return res.send(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  async logout(@Req() req: RequestWithUser, @Res() res: Response) {
+    const invalidCookie = this.authService.destroyCookie();
+    res.setHeader('Set-Cookie', invalidCookie);
+    return res.sendStatus(200);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  authenticate(@Req() req: RequestWithUser) {
+    const user = req.user;
+    user.hash = undefined;
+    return user;
   }
 }
