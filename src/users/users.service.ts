@@ -26,7 +26,6 @@ export class UsersService {
   async findByEmail(email: string) {
     const user = await this.usersRepository.findOne({ email });
     if (user) {
-      user.hash = undefined;
       return user;
     }
     throw new HttpException(
