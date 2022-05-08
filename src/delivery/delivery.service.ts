@@ -17,7 +17,7 @@ export class DeliveryService {
   ) {}
 
   async getAll() {
-    console.log('TEST');
+    console.log('Show all ways of delivery');
     const delivery = await this.deliveryRepository.find();
     if (!delivery) {
       throw new HttpException('Not found any delivery', HttpStatus.NOT_FOUND);
@@ -25,7 +25,7 @@ export class DeliveryService {
     return delivery;
   }
 
-  async findOneById(id: number) {
+  async findOneById(id: string) {
     const delivery = await this.deliveryRepository.findOne({
       where: {
         id: id,
@@ -40,9 +40,18 @@ export class DeliveryService {
     return delivery;
   }
 
-  async addDelivery(delivery: Omit<Delivery, 'id'>) {
+  async addDelivery(
+    delivery: Omit<Delivery, 'id' | 'createdAt' | 'modifiedAt'>,
+  ) {
     const prepairedDelivery = await this.deliveryRepository.create(delivery);
     const addedDelivery = await this.deliveryRepository.save(prepairedDelivery);
     return addedDelivery;
+  }
+
+  async updateDelivery(
+    id,
+    delivery: Omit<Delivery, 'id' | 'createdAt' | 'modifiedAt'>,
+  ) {
+    return await this.deliveryRepository.update(id, delivery);
   }
 }

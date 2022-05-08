@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Address } from './../addresses/address.entity';
 import { User } from './../users/user.entity';
+import { Delivery } from 'src/delivery/delivery.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { User } from './../users/user.entity';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME_OF_DATABASE'),
         autoLoadEntities: true,
-        entities: [User, Address],
+        entities: [User, Address, Delivery],
         synchronize: true,
         ssl: true,
         extra: {

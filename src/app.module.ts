@@ -14,6 +14,7 @@ import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { RolesGuard } from './auth/guards/roles.guards';
 import { UsersModule } from './users/users.module';
+import { DeliveryModule } from './delivery/delivery.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { UsersModule } from './users/users.module';
     }),
     AddressesModule,
     DatabaseModule,
+    DeliveryModule,
   ],
   controllers: [AppController, AddressesController],
   providers: [

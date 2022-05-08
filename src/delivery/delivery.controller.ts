@@ -1,5 +1,17 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { DeliveryService } from './delivery.service';
+
+class updateDeliveryDto {
+  deliveryName: string;
+  deliveryArea: string;
+  deliveryPrice: number;
+}
+
+class addDeliveryDto {
+  deliveryName!: string;
+  deliveryArea!: string;
+  deliveryPrice!: number;
+}
 
 @Controller('delivery')
 export class DeliveryController {
@@ -7,13 +19,25 @@ export class DeliveryController {
 
   @Get()
   async getAll() {
-    const users = await this.deliveryService.getAll();
-    return users;
+    return await this.deliveryService.getAll();
   }
 
   @Get(':id')
-  async getById(@Param('id') id: number) {
-    const delivery = await this.deliveryService.findOneById(id);
-    return delivery;
+  async getById(@Param('id') id: string) {
+    return await this.deliveryService.findOneById(id);
+  }
+
+  @Post()
+  async addDelivery(@Body() addDeliveryData: addDeliveryDto) {
+    return await this.deliveryService.addDelivery(addDeliveryData);
+  }
+
+  @Patch(':id')
+  async updateDelivery(
+    @Param('id') id: string,
+    @Body() updatedDeliveryData: updateDeliveryDto,
+  ) {
+    console.log(`This action updates delivery with id: ${id}`);
+    return await this.deliveryService.updateDelivery(id, updatedDeliveryData);
   }
 }

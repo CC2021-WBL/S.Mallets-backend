@@ -1,28 +1,32 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
+  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { v4 } from 'uuid';
 
 @Entity()
 export class Delivery {
-  @PrimaryGeneratedColumn()
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-  @Column('varchar', { length: 50 })
-  deliveryName: string;
+  @Column()
+  deliveryName!: string;
 
-  @Column('varchar', { length: 50 })
-  deliveryArea: string;
+  @Column()
+  deliveryArea!: string;
 
   @Column({ type: 'decimal' })
-  deliveryPrice: string;
+  deliveryPrice: number;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  modifiedAt: Date;
+  modifiedAt!: Date;
 }
