@@ -32,8 +32,8 @@ export class Address {
   zipCode: string;
 
   @Column({ default: new Date() })
-  modifiedAt?: Date;
+  modifiedAt: Date;
 
   @CreateDateColumn()
-  createdAt?: Date;
+  createdAt: Date;
 }

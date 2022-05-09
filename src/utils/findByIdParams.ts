@@ -9,3 +9,8 @@ export class FindByUserIdParams {
   @IsNumberString()
   userId: string;
 }
+
+export class FindByAddressIdParams {
+  @IsNumberString()
+  addressId: string;
+}

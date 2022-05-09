@@ -1,9 +1,14 @@
-import { FindByUserIdParams } from './../utils/findByIdParams';
+import { UpdateAddressDto } from './dto/update-address.dto';
+import {
+  FindByUserIdParams,
+  FindByAddressIdParams,
+} from './../utils/findByIdParams';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -37,10 +42,20 @@ export class AddressesController {
     return addedAddress;
   }
 
-  //   @Patch()
-  //   @Roles(Role.User)
-  //   @UseGuards(JwtAuthGuard, RolesGuard)
-  //   async updateAddress() {}
+  @Patch(':addressId')
+  @Roles(Role.User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async updateAddress(
+    @Param() { addressId }: FindByAddressIdParams,
+    @Body() addressData: UpdateAddressDto,
+  ) {
+    const sth = await this.addressesService.updateAddressByAddressId(
+      Number(addressId),
+      addressData,
+    );
+    console.log(sth);
+    return sth;
+  }
 
   @Get('get')
   @Roles(Role.User)
@@ -52,8 +67,13 @@ export class AddressesController {
     return userAddress;
   }
 
-  //   @Delete()
-  //   @Roles(Role.User)
-  //   @UseGuards(JwtAuthGuard, RolesGuard)
-  //   async getAddress() {}
+  @Delete(':addressId')
+  @Roles(Role.User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async deleteAddress(@Param() { addressId }: FindByAddressIdParams) {
+    const deletedAddress = await this.addressesService.deleteAddress(
+      Number(addressId),
+    );
+    return deletedAddress;
+  }
 }
