@@ -29,10 +29,11 @@ export class AddressesService {
         HttpStatus.NO_CONTENT,
       );
     } else {
+      console.log(user.address);
       const address = this.addressRepository.findOne({
         where: { id: user.address },
       });
-      if (!address) {
+      if (address) {
         return address;
       }
       throw new HttpException('Not found address', HttpStatus.NOT_FOUND);
