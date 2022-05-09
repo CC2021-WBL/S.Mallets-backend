@@ -4,9 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
-import { AddressesController } from './addresses/addresses.controller';
 import { AddressesModule } from './addresses/addresses.module';
-import { AddressesService } from './addresses/addresses.service';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
@@ -37,13 +35,12 @@ import { UsersModule } from './users/users.module';
     AddressesModule,
     DatabaseModule,
   ],
-  controllers: [AppController, AddressesController],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
-    AddressesService,
   ],
 })
 export class AppModule {}

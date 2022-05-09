@@ -28,6 +28,15 @@ export class UsersController {
     return user;
   }
 
+  @Get('with-address/:id')
+  @Roles(Role.User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async getUserWithAddress(@Param() { id }: FindByIdParams) {
+    const userWithAddress = await this.usersService.getUserWithAddress(
+      Number(id),
+    );
+    return userWithAddress;
+  }
   @Patch(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)

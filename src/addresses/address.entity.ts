@@ -6,10 +6,10 @@ import {
 } from 'typeorm';
 import { Length } from 'class-validator';
 
-@Entity()
+@Entity('addresses')
 export class Address {
   @PrimaryGeneratedColumn()
-  id: string;
+  id?: number;
 
   @Column()
   @Length(4, 60)
