@@ -11,6 +11,8 @@ import { DatabaseModule } from './database/database.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
+import { SeriesModule } from './series/series.module';
+import { TranslationsModule } from './translations/translations.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { UsersModule } from './users/users.module';
     }),
     AddressesModule,
     DatabaseModule,
+    SeriesModule,
+    TranslationsModule,
   ],
   controllers: [AppController],
   providers: [

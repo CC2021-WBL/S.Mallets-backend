@@ -17,7 +17,7 @@ export class Series {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   @IsString()
   seriesName: string;
 
@@ -36,7 +36,7 @@ export class Series {
   seriesAltText: Translation;
 
   @OneToMany(() => Product, (product) => product.seriesId)
-  products: Product[];
+  products?: Product[];
 
   @Column({ default: new Date() })
   modifiedAt?: Date;
