@@ -1,15 +1,12 @@
+import { CreateTranslationDto } from './../translations/dto/create-translations.dto';
+import { UpdateTranslationDto } from './../translations/dto/update-translations.dto';
 import { Utilization } from '../translations/types/translation-utilization.enum';
 
-export const prepareTranslationKey = (
+export const prepareTranslationDto = (
   entityUniqueName: string,
   utilization: Utilization,
-) => {
-  return `${entityUniqueName.toUpperCase()}_${utilization}`;
-};
-
-export const prepareTranslationDto = (
-  key: string,
-  translations: Record<string, string>,
-) => {
+  translations: UpdateTranslationDto,
+): CreateTranslationDto => {
+  const key = `${entityUniqueName.toUpperCase()}_${utilization}`;
   return { key: key, ...translations };
 };

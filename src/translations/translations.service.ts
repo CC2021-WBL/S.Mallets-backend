@@ -4,10 +4,14 @@ import { Repository } from 'typeorm';
 import { CreateTranslationDto } from './dto/create-translations.dto';
 import { Translation } from './translation.entity';
 import { UpdateTranslationDto } from './dto/update-translations.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TranslationsService {
-  constructor(private translationRepository: Repository<Translation>) {}
+  constructor(
+    @InjectRepository(Translation)
+    private translationRepository: Repository<Translation>,
+  ) {}
 
   async addTranslation(translationData: CreateTranslationDto) {
     const prepairedTranslation = await this.translationRepository.create(
