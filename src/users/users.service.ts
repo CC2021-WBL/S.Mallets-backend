@@ -19,6 +19,7 @@ export class UsersService {
     if (!user) {
       throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
     }
+    user.hash = undefined;
     return user;
   }
 

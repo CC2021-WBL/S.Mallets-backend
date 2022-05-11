@@ -12,7 +12,6 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
-import { RolesGuard } from './auth/guards/roles.guards';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -31,8 +30,7 @@ import { UsersModule } from './users/users.module';
         DB_NAME_OF_DATABASE: Joi.string().required(),
         SERVER_PORT: Joi.number(),
         JWT_EXPIRATION_TIME: Joi.string().required(),
-        PUB_KEY: Joi.string().required(),
-        PRIV_KEY: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
       }),
       isGlobal: true,
     }),
@@ -41,10 +39,6 @@ import { UsersModule } from './users/users.module';
   ],
   controllers: [AppController, AddressesController],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

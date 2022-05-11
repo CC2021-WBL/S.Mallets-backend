@@ -27,7 +27,7 @@ export class User {
   phoneNumber: number;
 
   @Column({ type: 'enum', enum: Role, default: Role.User })
-  role?: Role;
+  roles?: Role[];
 
   @OneToMany(() => Address, (address) => address.user)
   addresses?: Address[];
@@ -39,5 +39,5 @@ export class User {
   modifiedAt?: Date;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt?: Date;
 }
