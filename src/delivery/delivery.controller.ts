@@ -1,16 +1,19 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { DeliveryService } from './delivery.service';
+import { Order } from '../order/order.entity';
 
 class updateDeliveryDto {
   deliveryName: string;
   deliveryArea: string;
-  deliveryPrice: number;
+  deliveryPriceEuro: number;
+  orders: Order[];
 }
 
 class addDeliveryDto {
   deliveryName!: string;
   deliveryArea!: string;
-  deliveryPrice!: number;
+  deliveryPriceEuro!: number;
+  orders: Order[];
 }
 
 @Controller('delivery')

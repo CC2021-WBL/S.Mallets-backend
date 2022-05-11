@@ -10,7 +10,7 @@ import { AddressesService } from './addresses/addresses.service';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
-import { OrdersModule } from './orders/orders.module';
+import { OrderModule } from './order/order.module';
 import { ProductsModule } from './products/products.module';
 import { RolesGuard } from './auth/guards/roles.guards';
 import { UsersModule } from './users/users.module';
@@ -22,7 +22,6 @@ import { DeliveryModule } from './delivery/delivery.module';
     AuthModule,
     UsersModule,
     ThrottlerModule.forRoot({ ttl: 60, limit: 20 }),
-    OrdersModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         DB_HOST_NAME: Joi.string().required(),
@@ -40,6 +39,7 @@ import { DeliveryModule } from './delivery/delivery.module';
     AddressesModule,
     DatabaseModule,
     DeliveryModule,
+    OrderModule,
   ],
   controllers: [AppController, AddressesController],
   providers: [

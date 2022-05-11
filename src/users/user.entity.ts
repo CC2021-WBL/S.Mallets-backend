@@ -8,6 +8,7 @@ import {
 
 import { Address } from './../addresses/address.entity';
 import { Role } from '../auth/types/role.enum';
+import { Order } from '../order/order.entity';
 
 @Entity('users')
 export class User {
@@ -31,6 +32,9 @@ export class User {
 
   @OneToMany(() => Address, (address) => address.user)
   addresses?: Address[];
+
+  @OneToMany(() => Order, (order) => order.delivery)
+  orders: Order[];
 
   @Column()
   hash: string;

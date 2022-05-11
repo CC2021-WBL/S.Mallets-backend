@@ -1,6 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { User } from './../users/user.entity';
+import { Order } from '../order/order.entity';
 
 @Entity()
 export class Address {
@@ -24,4 +31,7 @@ export class Address {
 
   @Column()
   zipCode: string;
+
+  @OneToMany(() => Order, (order) => order.delivery)
+  orders: Order[];
 }

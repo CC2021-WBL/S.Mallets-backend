@@ -1,32 +1,44 @@
 import {
-  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
-  PrimaryColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { v4 } from 'uuid';
+import { Order } from '../order/order.entity';
 
 @Entity()
 export class Delivery {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column({
+    name: 'delivery_name',
+  })
   deliveryName!: string;
 
-  @Column()
+  @Column({
+    name: 'delivery_area',
+  })
   deliveryArea!: string;
 
-  @Column({ type: 'decimal' })
-  deliveryPrice: number;
+  @Column({
+    name: 'delivery_price_euro',
+    type: 'decimal',
+  })
+  deliveryPriceEuro: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    name: 'created_at',
+  })
   createdAt!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    name: 'modified_at',
+  })
   modifiedAt!: Date;
+
+  @OneToMany(() => Order, (order) => order.delivery)
+  orders: Order[];
 }
