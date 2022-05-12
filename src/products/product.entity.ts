@@ -4,6 +4,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -12,6 +13,7 @@ import { IsBase64, IsNumber, IsString } from 'class-validator';
 
 import { Series } from './../series/series.entity';
 import { Translation } from '../translations/translation.entity';
+import { OrderDetails } from '../order-details/order-details.entity';
 
 @Entity('products')
 export class Product {
@@ -60,4 +62,7 @@ export class Product {
 
   @CreateDateColumn()
   createdAt!: Date;
+
+  @OneToMany(() => OrderDetails, (orderDetails) => orderDetails.product)
+  orderDetails?: OrderDetails[];
 }

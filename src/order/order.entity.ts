@@ -4,11 +4,13 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Delivery } from '../delivery/delivery.entity';
 import { User } from '../users/user.entity';
+import { OrderDetails } from '../order-details/order-details.entity';
 
 export enum OrderStatusTypes {
   WAITING_FOR_PAYMENT = 'Waiting for payment',
@@ -17,19 +19,24 @@ export enum OrderStatusTypes {
   DELIVERY_IN_PROGRESS = 'Delivery in progress',
 }
 
-@Entity()
+@Entity('orders')
 export class Order {
+  // COLUMNS IN ALL ENTITIES
+
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => User, (user) => user.orders)
-  user: User;
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  createdAt!: Date;
 
-  @ManyToOne(() => Delivery, (delivery) => delivery.orders)
-  delivery: Delivery;
+  @UpdateDateColumn({
+    name: 'modified_at',
+  })
+  modifiedAt!: Date;
 
-  @ManyToOne(() => Address, (address) => address.orders)
-  address: Address;
+  // COLUMNS IN THIS ENTITY
 
   @Column({
     name: 'order_status',
@@ -47,13 +54,17 @@ export class Order {
   @Column({ name: 'message_from_user' })
   messageFromUser: string;
 
-  @CreateDateColumn({
-    name: 'created_at',
-  })
-  createdAt!: Date;
+  // RELATIONS OF THIS ENTITY
 
-  @UpdateDateColumn({
-    name: 'modified_at',
-  })
-  modifiedAt!: Date;
+  @ManyToOne(() => User, (user) => user.orders)
+  user: User;
+
+  @ManyToOne(() => Delivery, (delivery) => delivery.orders)
+  delivery: Delivery;
+
+  @ManyToOne(() => Address, (address) => address.orders)
+  address: Address;
+
+  @OneToMany(() => OrderDetails, (orderDetails) => orderDetails.order)
+  orderDetails?: OrderDetails[];
 }

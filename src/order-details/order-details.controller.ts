@@ -1,31 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { OrderService } from './order.service';
-import { Delivery } from '../delivery/delivery.entity';
-import { OrderStatusTypes } from './order.entity';
-import { User } from '../users/user.entity';
-import { Address } from '../addresses/address.entity';
-
-class addOrderDto {
-  orderStatus: OrderStatusTypes;
-  finalCostEuro: number;
-  messageFromUser: string;
-  delivery: Delivery;
-  user: User;
-  address: Address;
-}
+import { Controller, Get } from '@nestjs/common';
+import { OrderDetailsService } from './order-details.service';
 
 @Controller('order')
-export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+export class OrderDetailsController {
+  constructor(private readonly orderDetailsService: OrderDetailsService) {}
 
   @Get()
   async getAll() {
     console.log('Show all orders!');
-    return await this.orderService.getAll();
-  }
-
-  @Post()
-  async addDelivery(@Body() addOrderData: addOrderDto) {
-    return await this.orderService.addOrder(addOrderData);
+    return await this.orderDetailsService.getAll();
   }
 }

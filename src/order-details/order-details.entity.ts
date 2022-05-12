@@ -1,4 +1,4 @@
-import { Address } from 'src/addresses/address.entity';
+import { Product } from 'src/products/product.entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,45 +7,16 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Delivery } from '../delivery/delivery.entity';
-import { User } from '../users/user.entity';
 
-export enum OrderStatusTypes {
-  WAITING_FOR_PAYMENT = 'Waiting for payment',
-  PROCESSING_TIME = 'Processing time',
-  READY_FOR_SHIPMENT = 'Ready for shipment',
-  DELIVERY_IN_PROGRESS = 'Delivery in progress',
-}
+import { Order } from '../order/order.entity';
+import { Range } from '../utils/range';
 
 @Entity()
-export class Order {
+export class OrderDetails {
+  // COLUMNS IN ALL ENTITIES
+
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-
-  @ManyToOne(() => User, (user) => user.orders)
-  user!: User;
-
-  @ManyToOne(() => Delivery, (delivery) => delivery.orders)
-  delivery: Delivery;
-
-  @ManyToOne(() => Address, (address) => address.orders)
-  address: Address;
-
-  @Column({
-    name: 'order_status',
-    type: 'enum',
-    enum: OrderStatusTypes,
-  })
-  orderStatus: string;
-
-  @Column({
-    name: 'final_cost_euro',
-    type: 'numeric',
-  })
-  finalCostEuro: number;
-
-  @Column({ name: 'message_from_user' })
-  messageFromUser: string;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -56,4 +27,19 @@ export class Order {
     name: 'modified_at',
   })
   modifiedAt!: Date;
+
+  // COLUMNS IN THIS ENTITY
+
+  @Column({
+    type: 'smallint',
+  })
+  quantity: Range<1, 100>;
+
+  // RELATIONS OF THIS ENTITY
+
+  @ManyToOne(() => Order, (order) => order.orderDetails)
+  order!: Order;
+
+  @ManyToOne(() => Product, (product) => product.orderDetails)
+  product!: Product;
 }

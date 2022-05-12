@@ -1,27 +1,24 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Order } from './order.entity';
+import { OrderDetails } from './order-details.entity';
 
 @Injectable()
-export class OrderService {
+export class OrderDetailsService {
   constructor(
-    @InjectRepository(Order)
-    private orderRepository: Repository<Order>,
+    @InjectRepository(OrderDetails)
+    private orderDetailsRepository: Repository<OrderDetails>,
   ) {}
 
   async getAll() {
-    console.log('Show all ways of delivery');
-    const delivery = await this.orderRepository.find();
+    console.log('Show all order details');
+    const delivery = await this.orderDetailsRepository.find();
     if (!delivery) {
-      throw new HttpException('Not found any delivery', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        'Not found any order details',
+        HttpStatus.NOT_FOUND,
+      );
     }
     return delivery;
-  }
-
-  async addOrder(order: Omit<Order, 'id' | 'createdAt' | 'modifiedAt'>) {
-    const prepairedOrder = await this.orderRepository.create(order);
-    const addedOrder = await this.orderRepository.save(prepairedOrder);
-    return addedOrder;
   }
 }
