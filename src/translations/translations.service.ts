@@ -26,6 +26,23 @@ export class TranslationsService {
     throw new HttpException('InvalidData', HttpStatus.PARTIAL_CONTENT);
   }
 
+  async addManyTranslations(translations: CreateTranslationDto[]) {
+    const addedTranslations = this.translationRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Translation)
+      .values(translations)
+      .returning('*')
+      .execute()
+      .then((response) => {
+        return response.raw;
+      });
+    if (addedTranslations) {
+      return addedTranslations;
+    }
+    throw new HttpException('Invalid data', HttpStatus.PARTIAL_CONTENT);
+  }
+
   async updateTranslation(key: string, translationData: UpdateTranslationDto) {
     const updatedTranslation = await this.translationRepository
       .createQueryBuilder()

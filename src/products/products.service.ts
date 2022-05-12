@@ -1,3 +1,4 @@
+import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './product.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,7 +11,7 @@ export class ProductsService {
     private productRepository: Repository<Product>,
   ) {}
 
-  async addProduct(product: Omit<Product, 'id'>) {
+  async addProduct(product: CreateProductDto) {
     const prepairedProduct = await this.productRepository.create(product);
     const addedProduct = await this.productRepository.save(prepairedProduct);
     return addedProduct;

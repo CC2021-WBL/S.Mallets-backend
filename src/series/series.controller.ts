@@ -1,3 +1,4 @@
+import { prepareSeries } from './../utils/prepareEntitiesWithTranslation';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 
 import { CreateSeriesDto } from './dto/create-series.dto';
@@ -8,7 +9,6 @@ import { RolesGuard } from './../auth/guards/roles.guards';
 import { SeriesService } from './series.service';
 import { TranslationsService } from '../translations/translations.service';
 import { Utilization } from '../translations/types/translation-utilization.enum';
-import { prepareSeries } from './../utils/prepareSeries';
 import { prepareTranslationDto } from './../utils/prepareTranslationDto';
 
 @Controller('series')
@@ -26,15 +26,16 @@ export class SeriesController {
       Utilization.Description,
       seriesData.seriesDescription,
     );
-    const description = await this.translationsService.addTranslation(
-      descriptionData,
-    );
     const altTextData = prepareTranslationDto(
       seriesData.seriesName,
       Utilization.AltText,
       seriesData.seriesAltText,
     );
-    const altText = await this.translationsService.addTranslation(altTextData);
+    const [description, altText] =
+      await this.translationsService.addManyTranslations([
+        descriptionData,
+        altTextData,
+      ]);
     const readySeries = prepareSeries(seriesData, description, altText);
     const createdSeries = this.seriesService.createSeries(readySeries);
     return createdSeries;

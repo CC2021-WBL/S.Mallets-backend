@@ -17,9 +17,9 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   @IsString()
-  productName: string;
+  productModel: string;
 
   @OneToOne(() => Translation)
   @JoinColumn()
