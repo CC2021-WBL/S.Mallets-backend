@@ -1,14 +1,13 @@
 import { ConfigService } from '@nestjs/config';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { verifyPassword } from 'src/auth/cryptography/passwordUtils';
 
 import { PostgresErrorCode } from './../database/postgresErrorCodes.enum';
-import { PreCreateUser } from './../users/users.types';
+import { PreCreateUser } from '../users/create-user.dto';
 import { TokenPayload } from './types/tokenPayload.interface';
 import { User } from './../users/user.entity';
 import { UsersService } from './../users/users.service';
-import { genPassword } from './cryptography/passwordUtils';
+import { genPassword, verifyPassword } from './cryptography/passwordUtils';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +30,7 @@ export class AuthService {
     const payload: TokenPayload = {
       email: user.email,
       sub: user.id,
-      role: user.role,
+      roles: user.roles,
       iat: Date.now(),
     };
     const jwt = this.jwtService.sign(payload);

@@ -1,4 +1,4 @@
-import { PreCreateUser } from './../users/users.types';
+import { PreCreateUser } from '../users/create-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import {
   Body,
