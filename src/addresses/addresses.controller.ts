@@ -34,11 +34,11 @@ export class AddressesController {
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async createAddress(
-    @Param() { userId }: FindByUserIdParams,
+    @Param('userId ') userId: string,
     @Body() addressData: CreateAddressDto,
   ) {
     const addedAddress = await this.addressesService.createAddress(addressData);
-    await this.usersService.addAddressToUser(Number(userId), addedAddress);
+    await this.usersService.addAddressToUser(userId, addedAddress);
     return addedAddress;
   }
 

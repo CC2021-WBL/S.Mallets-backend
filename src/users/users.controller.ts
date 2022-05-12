@@ -31,31 +31,23 @@ export class UsersController {
   @Get('with-address/:id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async getUserWithAddress(@Param() { id }: FindByIdParams) {
-    const userWithAddress = await this.usersService.getUserWithAddress(
-      Number(id),
-    );
+  async getUserWithAddress(@Param('id') id: string) {
+    const userWithAddress = await this.usersService.getUserWithAddress(id);
     return userWithAddress;
   }
   @Patch(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async updateUser(
-    @Param() { id }: FindByIdParams,
-    @Body() userData: UpdateUserDto,
-  ) {
-    const updatedUser = await this.usersService.updateUser(
-      userData,
-      Number(id),
-    );
+  async updateUser(@Param('id') id: string, @Body() userData: UpdateUserDto) {
+    const updatedUser = await this.usersService.updateUser(userData, id);
     return updatedUser;
   }
 
   @Delete(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async deleteUser(@Param() { id }: FindByIdParams) {
-    const deleteResult = await this.usersService.deleteUser(Number(id));
+  async deleteUser(@Param('id') id: string) {
+    const deleteResult = await this.usersService.deleteUser(id);
     return deleteResult;
   }
 }
