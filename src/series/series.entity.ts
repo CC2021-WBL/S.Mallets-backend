@@ -6,6 +6,7 @@ import {
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { IsBase64, IsString } from 'class-validator';
 
@@ -38,7 +39,7 @@ export class Series {
   @OneToMany(() => Product, (product) => product.seriesId)
   products: Product[];
 
-  @Column()
+  @UpdateDateColumn()
   modifiedAt!: Date;
 
   @CreateDateColumn()

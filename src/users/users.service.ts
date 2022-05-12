@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { HashUser } from './types/hash-user-type';
 import { User } from './user.entity';
 
 @Injectable()
@@ -10,7 +11,7 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async findOneById(id: number) {
+  async findOneById(id: string) {
     const user = await this.usersRepository.findOne({
       where: {
         id: id,
@@ -56,7 +57,7 @@ export class UsersService {
     return users;
   }
 
-  async create(userData: User): Promise<any> {
+  async create(userData: HashUser): Promise<any> {
     const prepairedUser = await this.usersRepository.create(userData);
     const addedUser = await this.usersRepository.save(prepairedUser);
     if (addedUser) {

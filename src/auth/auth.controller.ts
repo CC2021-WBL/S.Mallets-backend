@@ -1,4 +1,4 @@
-import { PreCreateUser } from '../users/create-user.dto';
+import { CreateUserDto } from '../users/create-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import {
   Body,
@@ -19,7 +19,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('register')
-  async register(@Body() userData: PreCreateUser) {
+  async register(@Body() userData: CreateUserDto) {
     const user = await this.authService.register(userData);
     return user;
   }

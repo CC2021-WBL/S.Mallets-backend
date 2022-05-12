@@ -3,12 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Length } from 'class-validator';
 
-@Entity()
+@Entity('addresses')
 export class Address {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -31,9 +32,9 @@ export class Address {
   @Length(4, 15)
   zipCode: string;
 
-  @Column({ default: new Date() })
-  modifiedAt?: Date;
+  @UpdateDateColumn()
+  modifiedAt!: Date;
 
   @CreateDateColumn()
-  createdAt?: Date;
+  createdAt!: Date;
 }
