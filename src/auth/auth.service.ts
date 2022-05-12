@@ -2,7 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { CreateUserDto } from '../users/create-user.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import { PostgresErrorCode } from './../database/postgresErrorCodes.enum';
 import { TokenPayload } from './types/tokenPayload.interface';
 import { User } from './../users/user.entity';
@@ -60,5 +60,9 @@ export class AuthService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  destroyCookie() {
+    return `jwt=invalid; HttpOnly; Path=/; Max-Age=0`;
   }
 }
