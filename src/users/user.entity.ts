@@ -43,9 +43,9 @@ export class User {
   @Column()
   hash: string;
 
-  @Column({ default: new Date() })
-  modifiedAt?: Date;
+  @Column()
+  modifiedAt!: Date;
 
   @CreateDateColumn()
-  createdAt?: Date;
+  createdAt!: Date;
 }

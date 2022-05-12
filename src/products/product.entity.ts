@@ -54,9 +54,9 @@ export class Product {
   @ManyToOne(() => Series, (series) => series.products)
   seriesId: Series;
 
-  @Column({ default: new Date() })
-  modifiedAt?: Date;
+  @Column()
+  modifiedAt!: Date;
 
   @CreateDateColumn()
-  createdAt?: Date;
+  createdAt!: Date;
 }
