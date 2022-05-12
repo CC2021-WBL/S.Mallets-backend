@@ -1,27 +1,40 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Length } from 'class-validator';
 
-import { User } from './../users/user.entity';
-
-@Entity()
+@Entity('addresses')
 export class Address {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.addresses)
-  user: User;
-
   @Column()
+  @Length(4, 60)
   country: string;
 
   @Column()
+  @Length(1, 70)
   city: string;
 
   @Column()
+  @Length(1, 70)
   street: string;
 
   @Column()
+  @Length(1, 10)
   numberOfHouse: string;
 
   @Column()
+  @Length(4, 15)
   zipCode: string;
+
+  @UpdateDateColumn()
+  modifiedAt!: Date;
+
+  @CreateDateColumn()
+  createdAt!: Date;
 }

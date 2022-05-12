@@ -1,15 +1,23 @@
-import { User } from './user.entity';
-
-export type PreCreateUser = Pick<
-  User,
-  'email' | 'name' | 'surname' | 'phoneNumber'
-> & {
-  password: string;
-};
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateUserDto {
+  @IsEmail()
+  @IsNotEmpty()
   email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+
+  @IsString()
+  @IsNotEmpty()
   name: string;
+
+  @IsString()
+  @IsNotEmpty()
   surname: string;
-  phoneNumber: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  phoneNumber: number;
 }
