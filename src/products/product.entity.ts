@@ -6,6 +6,7 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { IsBase64, IsNumber, IsString } from 'class-validator';
 
@@ -54,9 +55,9 @@ export class Product {
   @ManyToOne(() => Series, (series) => series.products)
   seriesId: Series;
 
-  @Column({ default: new Date() })
-  modifiedAt?: Date;
+  @UpdateDateColumn()
+  modifiedAt!: Date;
 
   @CreateDateColumn()
-  createdAt?: Date;
+  createdAt!: Date;
 }

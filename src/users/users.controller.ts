@@ -23,8 +23,8 @@ export class UsersController {
   @Get(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async getById(@Param() { id }: FindByIdParams) {
-    const user = await this.usersService.findOneById(Number(id));
+  async getById(@Param('id') id: string) {
+    const user = await this.usersService.findOneById(id);
     return user;
   }
 

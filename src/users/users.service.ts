@@ -3,6 +3,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { HashUser } from './types/hash-user-type';
 import { User } from './user.entity';
 
 @Injectable()
@@ -12,7 +13,7 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(userData: User): Promise<User | null> {
+  async create(userData: HashUser): Promise<User | null> {
     const prepairedUser = await this.usersRepository.create(userData);
     const addedUser = await this.usersRepository.save(prepairedUser);
     if (addedUser) {
@@ -22,7 +23,7 @@ export class UsersService {
     return null;
   }
 
-  async updateUser(userData: UpdateUserDto, id: number): Promise<User> {
+  async updateUser(userData: UpdateUserDto, id: string): Promise<User> {
     const user = await this.findOneById(id);
     for (const key in userData) {
       if (Object.prototype.hasOwnProperty.call(userData, key)) {
@@ -36,7 +37,7 @@ export class UsersService {
     return updatedUser;
   }
 
-  async deleteUser(id: number) {
+  async deleteUser(id: string) {
     const deleteResult = await this.usersRepository.delete(id);
     if (!deleteResult.affected) {
       throw new HttpException('user deletion failed', HttpStatus.BAD_REQUEST);
@@ -44,7 +45,7 @@ export class UsersService {
     return deleteResult;
   }
 
-  async addAddressToUser(userId: number, address: Address) {
+  async addAddressToUser(userId: string, address: Address) {
     const updateResult = await this.usersRepository.update(
       { id: userId },
       { address: address },
@@ -55,7 +56,7 @@ export class UsersService {
     throw new HttpException('Not changed', HttpStatus.NOT_MODIFIED);
   }
 
-  async findOneById(id: number) {
+  async findOneById(id: string) {
     const user = await this.usersRepository
       .createQueryBuilder('user')
       .where('user.id = :id', { id: id })
@@ -94,7 +95,7 @@ export class UsersService {
     throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
   }
 
-  async getUserWithAddress(id: number) {
+  async getUserWithAddress(id: string) {
     const userWithAddress = await this.usersRepository
       .createQueryBuilder('users')
       .leftJoinAndSelect('users.address', 'addresses')
