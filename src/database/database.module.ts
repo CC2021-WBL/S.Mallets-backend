@@ -2,7 +2,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Address } from './../addresses/address.entity';
+import { Address } from '../addresses/address.entity';
+import { Product } from './../products/product.entity';
+import { Series } from '../series/series.entity';
+import { Translation } from './../translations/translation.entity';
 import { User } from './../users/user.entity';
 import { Delivery } from 'src/delivery/delivery.entity';
 
@@ -19,7 +22,7 @@ import { Delivery } from 'src/delivery/delivery.entity';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME_OF_DATABASE'),
         autoLoadEntities: true,
-        entities: [User, Address, Delivery],
+        entities: [User, Address, Translation, Series, Product, Delivery],
         synchronize: true,
         ssl: true,
         extra: {

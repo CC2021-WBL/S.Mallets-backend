@@ -1,36 +1,44 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
-  ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
-
-import { User } from './../users/user.entity';
+import { Length } from 'class-validator';
 import { Order } from '../order/order.entity';
 
-@Entity()
+@Entity('addresses')
 export class Address {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.addresses)
-  user: User;
-
   @Column()
+  @Length(4, 60)
   country: string;
 
   @Column()
+  @Length(1, 70)
   city: string;
 
   @Column()
+  @Length(1, 70)
   street: string;
 
   @Column()
+  @Length(1, 10)
   numberOfHouse: string;
 
   @Column()
+  @Length(4, 15)
   zipCode: string;
+
+  @UpdateDateColumn()
+  modifiedAt!: Date;
+
+  @CreateDateColumn()
+  createdAt!: Date;
 
   @OneToMany(() => Order, (order) => order.delivery)
   orders: Order[];

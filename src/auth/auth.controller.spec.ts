@@ -11,7 +11,7 @@ describe('AuthController', () => {
       delete object.password;
       const resObj = {
         ...object,
-        id: 1,
+        id: 'uuid',
         roles: [Role.User],
         modifiedAt: new Date(),
         createdAt: new Date(),
@@ -48,7 +48,7 @@ describe('AuthController', () => {
     expect(authController.register(userObj)).toEqual(
       new Promise((resolve, reject) => {
         resolve({
-          id: expect.any(Number),
+          id: expect.any(String),
           email: 'matylda@wp.pl',
           name: 'Matylda',
           surname: 'Borutka',
