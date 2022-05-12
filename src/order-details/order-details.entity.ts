@@ -11,7 +11,11 @@ import {
 import { Order } from '../order/order.entity';
 import { Range } from '../utils/range';
 
-@Entity()
+type HeadDiameterTypes = Range<30, 50>;
+type StickLengthTypes = 35 | 35.5 | 36 | 36.5 | 37 | 37.5 | 38 | 38.5 | 39;
+type WeightTypes = Range<29, 38>;
+
+@Entity('order_details')
 export class OrderDetails {
   // COLUMNS IN ALL ENTITIES
 
@@ -34,6 +38,23 @@ export class OrderDetails {
     type: 'smallint',
   })
   quantity: Range<1, 100>;
+
+  @Column({
+    name: 'head_diameter',
+    type: 'smallint',
+  })
+  headDiameter: HeadDiameterTypes;
+
+  @Column({
+    name: 'stick_length',
+    type: 'smallint',
+  })
+  stickLength: StickLengthTypes;
+
+  @Column({
+    type: 'smallint',
+  })
+  weight: WeightTypes;
 
   // RELATIONS OF THIS ENTITY
 

@@ -19,7 +19,7 @@ export enum OrderStatusTypes {
   DELIVERY_IN_PROGRESS = 'Delivery in progress',
 }
 
-@Entity('orders')
+@Entity('order')
 export class Order {
   // COLUMNS IN ALL ENTITIES
 

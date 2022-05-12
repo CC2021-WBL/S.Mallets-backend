@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { IsBase64, IsNumber, IsString } from 'class-validator';
 
-import { Series } from './../series/series.entity';
+import { Series } from '../series/series.entity';
 import { Translation } from '../translations/translation.entity';
 import { OrderDetails } from '../order-details/order-details.entity';
 

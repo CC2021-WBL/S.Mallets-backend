@@ -15,6 +15,8 @@ import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { DeliveryModule } from './delivery/delivery.module';
 import { ProductsController } from './products/products.controller';
+import { OrderDetails } from './order-details/order-details.entity';
+import { OrderDetailsModule } from './order-details/order-details.module';
 
 @Module({
   imports: [
@@ -39,6 +41,7 @@ import { ProductsController } from './products/products.controller';
     DatabaseModule,
     DeliveryModule,
     OrderModule,
+    OrderDetailsModule,
     ProductsModule,
   ],
   controllers: [AppController, AddressesController],
