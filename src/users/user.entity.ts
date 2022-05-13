@@ -38,7 +38,7 @@ export class User {
   roles: Role[];
 
   @OneToOne(() => Address)
-  @JoinColumn({ name: 'addressId' })
+  @JoinColumn()
   address?: Address;
 
   @Column()

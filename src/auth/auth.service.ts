@@ -51,7 +51,6 @@ export class AuthService {
       user.hash = undefined;
       return user;
     } catch (error: any) {
-      console.log(error);
       if (error?.code === PostgresErrorCode.UniqueViolation) {
         throw new HttpException(
           'User with that email already exists',

@@ -13,15 +13,6 @@ export class AddressesService {
     private addressRepository: Repository<Address>,
   ) {}
 
-  async createAddress(address: CreateAddressDto): Promise<Address> {
-    const prepairedAddress = await this.addressRepository.create(address);
-    const addedAddress = await this.addressRepository.save(prepairedAddress);
-    if (addedAddress) {
-      return addedAddress;
-    }
-    throw new HttpException('Invalid data', HttpStatus.PARTIAL_CONTENT);
-  }
-
   async getCurrentUserAddress(user: User) {
     if (!user.address) {
       throw new HttpException(
@@ -29,7 +20,6 @@ export class AddressesService {
         HttpStatus.NO_CONTENT,
       );
     } else {
-      console.log(user.address);
       const address = this.addressRepository.findOne({
         where: { id: user.address },
       });
@@ -40,7 +30,7 @@ export class AddressesService {
     }
   }
 
-  async updateAddressByAddressId(id: number, addressData: UpdateAddressDto) {
+  async updateAddressByAddressId(id: string, addressData: UpdateAddressDto) {
     const updatedAddress = await this.addressRepository
       .createQueryBuilder()
       .update()
@@ -55,26 +45,5 @@ export class AddressesService {
       throw new HttpException('Updating failed', HttpStatus.BAD_REQUEST);
     }
     return updatedAddress;
-  }
-
-  async deleteAddress(id: number) {
-    const deletedAddress = await this.addressRepository
-      .createQueryBuilder()
-      .delete()
-      .from(Address)
-      .where('id = :id', { id: id })
-      .returning('*')
-      .execute()
-      .then((response) => {
-        return response.raw[0];
-      });
-
-    if (!deletedAddress) {
-      throw new HttpException(
-        'Deletion failed',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-    return deletedAddress;
   }
 }
