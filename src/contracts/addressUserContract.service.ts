@@ -2,7 +2,6 @@ import { Connection } from 'typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 import { Address } from '../addresses/address.entity';
-import { AddressesService } from './../addresses/addresses.service';
 import { CreateAddressDto } from '../addresses/dto/create-address.dto';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
