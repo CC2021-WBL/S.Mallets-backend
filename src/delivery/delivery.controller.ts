@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { DeliveryService } from './delivery.service';
 import { CreateDeliveryDto } from './dto/create-delivery.dto';
 import { UpdateDeliveryDto } from './dto/update-delivery.dto';
@@ -21,6 +29,7 @@ export class DeliveryController {
 
   @Post()
   async addDelivery(@Body() addDeliveryData: CreateDeliveryDto) {
+    console.log(`New way of delivery has been added.`);
     return await this.deliveryService.addDelivery(addDeliveryData);
   }
 
@@ -29,7 +38,13 @@ export class DeliveryController {
     @Param('id') id: string,
     @Body() updatedDeliveryData: UpdateDeliveryDto,
   ) {
-    console.log(`This action updates delivery with id: ${id}`);
+    console.log(`Delivery with id: ${id} has been updated.`);
     return await this.deliveryService.updateDelivery(id, updatedDeliveryData);
+  }
+
+  @Delete(':id')
+  async deleteDelivery(@Param('id') id: string) {
+    console.log(`Delivery with id: ${id} has been deleted.`);
+    return await this.deliveryService.deleteDelivery(id);
   }
 }
