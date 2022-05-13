@@ -23,8 +23,8 @@ export class UsersController {
   @Get(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async getById(@Param() { id }: FindByIdParams) {
-    const user = await this.usersService.findOneById(Number(id));
+  async getById(@Param('id') id: string) {
+    const user = await this.usersService.findOneById(id);
     return user;
   }
 
@@ -40,22 +40,16 @@ export class UsersController {
   @Patch(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async updateUser(
-    @Param() { id }: FindByIdParams,
-    @Body() userData: UpdateUserDto,
-  ) {
-    const updatedUser = await this.usersService.updateUser(
-      userData,
-      Number(id),
-    );
+  async updateUser(@Param('id') id: string, @Body() userData: UpdateUserDto) {
+    const updatedUser = await this.usersService.updateUser(userData, id);
     return updatedUser;
   }
 
   @Delete(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async deleteUser(@Param() { id }: FindByIdParams) {
-    const deleteResult = await this.usersService.deleteUser(Number(id));
+  async deleteUser(@Param('id') id: string) {
+    const deleteResult = await this.usersService.deleteUser(id);
     return deleteResult;
   }
 }

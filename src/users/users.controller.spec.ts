@@ -53,11 +53,11 @@ describe('UsersController', () => {
   });
 
   it('should get the user', () => {
-    const id: any = 10;
+    const id: any = '10';
     expect(usersController.getById(id)).toEqual(
       new Promise((resolve, reject) => {
         resolve({
-          id: 10,
+          id: expect.any(String),
           email: 'matylda@wp.pl',
           name: expect.any(String),
           surname: expect.any(String),
@@ -72,11 +72,11 @@ describe('UsersController', () => {
   });
 
   it('should update a user', () => {
-    const id: any = 10;
+    const id: any = '10';
     expect(usersController.updateUser(id, { phoneNumber: 6666666666 })).toEqual(
       new Promise((resolve, reject) => {
         resolve({
-          id: 10,
+          id: expect.any(String),
           email: 'matylda@wp.pl',
           name: expect.any(String),
           surname: expect.any(String),

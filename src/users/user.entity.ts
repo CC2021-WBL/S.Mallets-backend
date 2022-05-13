@@ -5,6 +5,7 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { IsEmail, IsInt, IsPositive, Length } from 'class-validator';
 
@@ -13,8 +14,8 @@ import { Role } from '../auth/types/role.enum';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
-  id?: number;
+  @PrimaryGeneratedColumn('uuid')
+  id?: string;
 
   @Column({ unique: true })
   @IsEmail()
@@ -33,8 +34,8 @@ export class User {
   @IsPositive()
   phoneNumber: number;
 
-  @Column({ type: 'enum', enum: Role, default: [Role.User] })
-  roles?: Role[];
+  @Column('simple-array', { array: true, default: [Role.User] })
+  roles: Role[];
 
   @OneToOne(() => Address)
   @JoinColumn({ name: 'addressId' })
@@ -46,9 +47,9 @@ export class User {
   @Column()
   hash: string;
 
-  @Column({ default: new Date() })
-  modifiedAt?: Date;
+  @UpdateDateColumn()
+  modifiedAt!: Date;
 
   @CreateDateColumn()
-  createdAt?: Date;
+  createdAt!: Date;
 }
