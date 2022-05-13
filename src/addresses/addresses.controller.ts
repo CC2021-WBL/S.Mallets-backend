@@ -38,7 +38,7 @@ export class AddressesController {
     @Body() addressData: CreateAddressDto,
   ) {
     const addedAddress = await this.addressesService.createAddress(addressData);
-    await this.usersService.addAddressToUser(Number(userId), addedAddress);
+    await this.usersService.addAddressToUser(userId, addedAddress);
     return addedAddress;
   }
 
