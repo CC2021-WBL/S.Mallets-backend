@@ -1,19 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { Delivery } from '../delivery/delivery.entity';
-import { OrderStatusTypes } from './order.entity';
-import { User } from '../users/user.entity';
-import { Address } from '../addresses/address.entity';
+import { CreateOrderDto } from './dto/create-order.dto';
 import { ApiTags } from '@nestjs/swagger';
-
-class addOrderDto {
-  orderStatus: OrderStatusTypes;
-  finalCostEuro: number;
-  messageFromUser: string;
-  delivery: Delivery;
-  user: User;
-  address: Address;
-}
 
 @ApiTags('order')
 @Controller('order')
@@ -27,7 +15,7 @@ export class OrderController {
   }
 
   @Post()
-  async addDelivery(@Body() addOrderData: addOrderDto) {
+  async addOrder(@Body() addOrderData: CreateOrderDto) {
     return await this.orderService.addOrder(addOrderData);
   }
 }

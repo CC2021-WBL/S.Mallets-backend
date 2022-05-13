@@ -11,13 +11,7 @@ import {
 import { Delivery } from '../delivery/delivery.entity';
 import { User } from '../users/user.entity';
 import { OrderDetails } from '../order-details/order-details.entity';
-
-export enum OrderStatusTypes {
-  WAITING_FOR_PAYMENT = 'Waiting for payment',
-  PROCESSING_TIME = 'Processing time',
-  READY_FOR_SHIPMENT = 'Ready for shipment',
-  DELIVERY_IN_PROGRESS = 'Delivery in progress',
-}
+import { OrderStatusTypes } from "./dto/create-order.dto";
 
 @Entity('order')
 export class Order {
