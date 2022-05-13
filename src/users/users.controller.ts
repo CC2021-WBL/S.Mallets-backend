@@ -1,5 +1,4 @@
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FindByIdParams } from './../utils/findByIdParams';
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import {
   Body,

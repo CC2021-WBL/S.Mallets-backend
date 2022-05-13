@@ -1,8 +1,4 @@
 import { UpdateAddressDto } from './dto/update-address.dto';
-import {
-  FindByUserIdParams,
-  FindByAddressIdParams,
-} from './../utils/findByIdParams';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import {
