@@ -25,5 +25,6 @@ export class CreateUserDto {
   surname: string;
   @IsInt()
   @IsPositive()
+  @IsNotEmpty()
   phoneNumber: number;
 }

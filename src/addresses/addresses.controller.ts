@@ -23,22 +23,26 @@ import { Roles } from '../decorators/roles.decorators';
 import { Role } from '../auth/types/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guards';
 import RequestWithUser from '../auth/types/requestWithUser.interface';
+import { AddressUserContract } from '../contracts/AddressUserContract.service';
 
 @Controller('addresses')
 export class AddressesController {
   constructor(
     private readonly addressesService: AddressesService,
     private readonly usersService: UsersService,
+    private readonly addressUserContract: AddressUserContract,
   ) {}
-  @Post('add/:userId')
+  @Post('add')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async createAddress(
-    @Param() { userId }: FindByUserIdParams,
+    @Req() req: RequestWithUser,
     @Body() addressData: CreateAddressDto,
   ) {
-    const addedAddress = await this.addressesService.createAddress(addressData);
-    await this.usersService.addAddressToUser(userId, addedAddress);
+    const addedAddress = this.addressUserContract.createAddress(
+      addressData,
+      req.user.id,
+    );
     return addedAddress;
   }
 
@@ -46,15 +50,14 @@ export class AddressesController {
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async updateAddress(
-    @Param() { addressId }: FindByAddressIdParams,
+    @Param('addressId') addressId: string,
     @Body() addressData: UpdateAddressDto,
   ) {
-    const sth = await this.addressesService.updateAddressByAddressId(
-      Number(addressId),
+    const updatedAddress = await this.addressesService.updateAddressByAddressId(
+      addressId,
       addressData,
     );
-    console.log(sth);
-    return sth;
+    return updatedAddress;
   }
 
   @Get('get')
@@ -67,13 +70,13 @@ export class AddressesController {
     return userAddress;
   }
 
-  @Delete(':addressId')
+  @Delete()
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async deleteAddress(@Param() { addressId }: FindByAddressIdParams) {
-    const deletedAddress = await this.addressesService.deleteAddress(
-      Number(addressId),
+  async deleteAddress(@Req() req: RequestWithUser) {
+    const isAddressDeleted = await this.addressUserContract.deleteAddress(
+      req.user.id,
     );
-    return deletedAddress;
+    return isAddressDeleted;
   }
 }

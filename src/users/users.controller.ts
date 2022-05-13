@@ -33,6 +33,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   async getUserWithAddress(@Param('id') id: string) {
     const userWithAddress = await this.usersService.getUserWithAddress(id);
+    userWithAddress.hash = undefined;
     return userWithAddress;
   }
   @Patch(':id')

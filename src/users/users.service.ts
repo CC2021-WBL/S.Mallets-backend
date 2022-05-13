@@ -53,7 +53,7 @@ export class UsersService {
     if (updateResult.affected === 1) {
       return true;
     }
-    throw new HttpException('Not changed', HttpStatus.NOT_MODIFIED);
+    throw new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   async findOneById(id: string) {
@@ -102,7 +102,6 @@ export class UsersService {
       .where({ id: id })
       .getOne();
     if (userWithAddress) {
-      userWithAddress.hash = undefined;
       return userWithAddress;
     }
     throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
