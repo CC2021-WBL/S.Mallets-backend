@@ -4,6 +4,7 @@ import { Delivery } from '../delivery/delivery.entity';
 import { OrderStatusTypes } from './order.entity';
 import { User } from '../users/user.entity';
 import { Address } from '../addresses/address.entity';
+import { ApiTags } from '@nestjs/swagger';
 
 class addOrderDto {
   orderStatus: OrderStatusTypes;
@@ -14,6 +15,7 @@ class addOrderDto {
   address: Address;
 }
 
+@ApiTags('order')
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}

@@ -1,21 +1,10 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { DeliveryService } from './delivery.service';
-import { Order } from '../order/order.entity';
+import { CreateDeliveryDto } from './dto/create-delivery.dto';
+import { UpdateDeliveryDto } from './dto/update-delivery.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-class updateDeliveryDto {
-  deliveryName: string;
-  deliveryArea: string;
-  deliveryPriceEuro: number;
-  orders: Order[];
-}
-
-class addDeliveryDto {
-  deliveryName!: string;
-  deliveryArea!: string;
-  deliveryPriceEuro!: number;
-  orders: Order[];
-}
-
+@ApiTags('delivery')
 @Controller('delivery')
 export class DeliveryController {
   constructor(private readonly deliveryService: DeliveryService) {}
@@ -31,14 +20,14 @@ export class DeliveryController {
   }
 
   @Post()
-  async addDelivery(@Body() addDeliveryData: addDeliveryDto) {
+  async addDelivery(@Body() addDeliveryData: CreateDeliveryDto) {
     return await this.deliveryService.addDelivery(addDeliveryData);
   }
 
   @Patch(':id')
   async updateDelivery(
     @Param('id') id: string,
-    @Body() updatedDeliveryData: updateDeliveryDto,
+    @Body() updatedDeliveryData: UpdateDeliveryDto,
   ) {
     console.log(`This action updates delivery with id: ${id}`);
     return await this.deliveryService.updateDelivery(id, updatedDeliveryData);

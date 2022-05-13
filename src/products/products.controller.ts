@@ -5,7 +5,9 @@ import { Roles } from 'src/decorators/roles.decorators';
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import { ProductsService } from './products.service';
 import { RolesGuard } from './../auth/guards/roles.guards';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}

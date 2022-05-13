@@ -1,13 +1,9 @@
-import {
-  Get,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  Param,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Delivery } from './delivery.entity';
+import { CreateDeliveryDto } from './dto/create-delivery.dto';
+import { UpdateDeliveryDto } from './dto/update-delivery.dto';
 
 @Injectable()
 export class DeliveryService {
@@ -40,18 +36,13 @@ export class DeliveryService {
     return delivery;
   }
 
-  async addDelivery(
-    delivery: Omit<Delivery, 'id' | 'createdAt' | 'modifiedAt'>,
-  ) {
+  async addDelivery(delivery: CreateDeliveryDto) {
     const prepairedDelivery = await this.deliveryRepository.create(delivery);
     const addedDelivery = await this.deliveryRepository.save(prepairedDelivery);
     return addedDelivery;
   }
 
-  async updateDelivery(
-    id,
-    delivery: Omit<Delivery, 'id' | 'createdAt' | 'modifiedAt'>,
-  ) {
+  async updateDelivery(id, delivery: UpdateDeliveryDto) {
     return await this.deliveryRepository.update(id, delivery);
   }
 }

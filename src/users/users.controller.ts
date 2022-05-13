@@ -1,5 +1,4 @@
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FindByIdParams } from './../utils/findByIdParams';
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import {
   Body,
@@ -15,7 +14,9 @@ import { UsersService } from './users.service';
 import { Roles } from '../decorators/roles.decorators';
 import { Role } from '../auth/types/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guards';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
