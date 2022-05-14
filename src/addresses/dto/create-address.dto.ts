@@ -18,7 +18,7 @@ export class CreateAddressDto {
 
   @IsString()
   @IsNotEmpty()
-  @Length(4, 10)
+  @Length(1, 10)
   numberOfHouse: string;
 
   @IsString()

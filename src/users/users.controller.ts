@@ -5,6 +5,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   UseGuards,
@@ -39,6 +41,9 @@ export class UsersController {
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async updateUser(@Param('id') id: string, @Body() userData: UpdateUserDto) {
+    if (Object.keys(userData).length === 0) {
+      throw new HttpException('No content', HttpStatus.NO_CONTENT);
+    }
     const updatedUser = await this.usersService.updateUser(userData, id);
     return updatedUser;
   }
