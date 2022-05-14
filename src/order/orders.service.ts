@@ -5,15 +5,15 @@ import { Order } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
-export class OrderService {
+export class OrdersService {
   constructor(
     @InjectRepository(Order)
-    private orderRepository: Repository<Order>,
+    private ordersRepository: Repository<Order>,
   ) {}
 
   async getAll() {
     console.log('Show all ways of delivery');
-    const delivery = await this.orderRepository.find();
+    const delivery = await this.ordersRepository.find();
     if (!delivery) {
       throw new HttpException('Not found any delivery', HttpStatus.NOT_FOUND);
     }
@@ -21,7 +21,7 @@ export class OrderService {
   }
 
   async addOrder(order: CreateOrderDto) {
-    const newOrder = await this.orderRepository.create(order);
-    return await this.orderRepository.save(newOrder);
+    const newOrder = await this.ordersRepository.create(order);
+    return await this.ordersRepository.save(newOrder);
   }
 }

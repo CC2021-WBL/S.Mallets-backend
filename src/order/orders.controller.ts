@@ -1,21 +1,21 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { OrderService } from './order.service';
+import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('order')
-@Controller('order')
-export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+@ApiTags('orders')
+@Controller('orders')
+export class OrdersController {
+  constructor(private readonly ordersService: OrdersService) {}
 
   @Get()
   async getAll() {
     console.log('Show all orders!');
-    return await this.orderService.getAll();
+    return await this.ordersService.getAll();
   }
 
   @Post()
   async addOrder(@Body() addOrderData: CreateOrderDto) {
-    return await this.orderService.addOrder(addOrderData);
+    return await this.ordersService.addOrder(addOrderData);
   }
 }

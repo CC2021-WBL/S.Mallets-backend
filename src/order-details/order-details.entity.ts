@@ -9,11 +9,12 @@ import {
 } from 'typeorm';
 
 import { Order } from '../order/order.entity';
-import { Range } from '../utils/range';
-
-type HeadDiameterTypes = Range<30, 50>;
-type StickLengthTypes = 35 | 35.5 | 36 | 36.5 | 37 | 37.5 | 38 | 38.5 | 39;
-type WeightTypes = Range<29, 38>;
+import {
+  HeadDiameterTypes,
+  Ranges,
+  StickLengthTypes,
+  WeightTypes,
+} from '../utils/ranges';
 
 @Entity('order_details')
 export class OrderDetails {
@@ -37,7 +38,7 @@ export class OrderDetails {
   @Column({
     type: 'smallint',
   })
-  quantity: Range<1, 100>;
+  quantity: Ranges<1, 100>;
 
   @Column({
     name: 'head_diameter',

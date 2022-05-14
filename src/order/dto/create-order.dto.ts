@@ -12,15 +12,15 @@ export enum OrderStatusTypes {
 }
 
 export class CreateOrderDto {
-  @ApiProperty({
-    description: 'Order status',
-    default: OrderStatusTypes.WAITING_FOR_PAYMENT,
-    name: 'orderStatus',
-    enum: OrderStatusTypes,
-  })
-  @IsNotEmpty()
-  @IsString()
-  orderStatus: OrderStatusTypes;
+  // @ApiProperty({
+  //   description: 'Order status',
+  //   default: OrderStatusTypes.WAITING_FOR_PAYMENT,
+  //   name: 'orderStatus',
+  //   enum: OrderStatusTypes,
+  // })
+  // @IsNotEmpty()
+  // @IsString()
+  // orderStatus: OrderStatusTypes.WAITING_FOR_PAYMENT;
 
   @ApiProperty({
     description: 'Full order price in EUR currency',

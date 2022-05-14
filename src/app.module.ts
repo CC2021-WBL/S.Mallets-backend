@@ -10,7 +10,7 @@ import { AddressesService } from './addresses/addresses.service';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
-import { OrderModule } from './order/order.module';
+import { OrdersModule } from './order/orders.module';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { DeliveryModule } from './delivery/delivery.module';
@@ -40,7 +40,7 @@ import { OrderDetailsModule } from './order-details/order-details.module';
     AddressesModule,
     DatabaseModule,
     DeliveryModule,
-    OrderModule,
+    OrdersModule,
     OrderDetailsModule,
     ProductsModule,
   ],
