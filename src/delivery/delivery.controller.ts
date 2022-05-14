@@ -10,7 +10,7 @@ import {
 import { DeliveryService } from './delivery.service';
 import { CreateDeliveryDto } from './dto/create-delivery.dto';
 import { UpdateDeliveryDto } from './dto/update-delivery.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('delivery')
 @Controller('delivery')
@@ -18,16 +18,28 @@ export class DeliveryController {
   constructor(private readonly deliveryService: DeliveryService) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'All deliveries from the base',
+  })
   async getAll() {
     return await this.deliveryService.getAll();
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Chosen delivery from the base',
+  })
   async getById(@Param('id') id: string) {
     return await this.deliveryService.findOneById(id);
   }
 
   @Post()
+  @ApiResponse({
+    status: 201,
+    description: 'New delivery has been added to the base.',
+  })
   async addDelivery(@Body() addDeliveryData: CreateDeliveryDto) {
     console.log(`New way of delivery has been added.`);
     return await this.deliveryService.addDelivery(addDeliveryData);

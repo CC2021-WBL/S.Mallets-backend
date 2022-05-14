@@ -12,27 +12,50 @@ export enum OrderStatusTypes {
 }
 
 export class CreateOrderDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Order status',
+    default: OrderStatusTypes.WAITING_FOR_PAYMENT,
+    name: 'orderStatus',
+    enum: OrderStatusTypes,
+  })
   @IsNotEmpty()
   @IsString()
   orderStatus: OrderStatusTypes;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Full order price in EUR currency',
+    default: 10.99,
+  })
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
   finalCostEuro: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Message from user',
+    default: 'Please gift this as a gift',
+  })
   @IsString()
   messageFromUser: string;
 
-  @ApiProperty({ type: () => Delivery })
+  @ApiProperty({
+    description: 'Reference to delivery',
+    default: '0a78645f-f742-4da1-b98f-45a13ecc6de8',
+    type: () => Delivery,
+  })
   delivery: Delivery;
 
-  @ApiProperty({ type: () => User })
+  @ApiProperty({
+    description: 'Reference to user',
+    default: 'eff74690-f5bd-4c67-8171-6e22d5393c0e',
+    type: () => User,
+  })
   user: User;
 
-  @ApiProperty({ type: () => Address })
+  @ApiProperty({
+    description: 'Reference to address',
+    default: 'ab68ba60-e0d1-4eb9-9f5a-612d2fa06c0e',
+    type: () => Address,
+  })
   address: Address;
 }
