@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Product } from './product.entity';
-import { ProductTransactionService } from '../contracts/ProductTransaction.service';
+import { ProductTranslationContract } from '../contracts/productTranslationContract';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
 import { TranslationsModule } from './../translations/translations.module';
@@ -10,6 +10,6 @@ import { TranslationsModule } from './../translations/translations.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Product]), TranslationsModule],
   controllers: [ProductsController],
-  providers: [ProductsService, ProductTransactionService],
+  providers: [ProductsService, ProductTranslationContract],
 })
 export class ProductsModule {}

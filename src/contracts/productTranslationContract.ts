@@ -6,7 +6,6 @@ import { InjectConnection } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 
 import { ProductsService } from '../products/products.service';
-import { CreateTranslationDto } from '../translations/dto/create-translations.dto';
 import { TranslationsService } from '../translations/translations.service';
 import { Utilization } from '../translations/types/translation-utilization.enum';
 import { Translation } from '../translations/translation.entity';
@@ -19,7 +18,7 @@ import { Product } from '../products/product.entity';
 // };
 
 @Injectable()
-export class ProductTransactionService {
+export class ProductTranslationContract {
   constructor(
     @InjectConnection()
     private readonly connection: Connection,
