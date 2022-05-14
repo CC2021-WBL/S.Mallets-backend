@@ -38,16 +38,17 @@ export class Order {
     enum: OrderStatusTypes,
     default: OrderStatusTypes.WAITING_FOR_PAYMENT,
   })
-  orderStatus: string;
+  orderStatus!: string;
 
   @Column({
     name: 'final_cost_euro',
     type: 'numeric',
+    default: 0,
   })
   finalCostEuro: number;
 
-  @Column({ name: 'message_from_user' })
-  messageFromUser: string;
+  @Column({ nullable: true, name: 'message_from_user' })
+  messageFromUser?: string;
 
   // RELATIONS OF THIS ENTITY
 

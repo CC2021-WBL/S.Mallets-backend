@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Order } from './order.entity';
 import { CreateOrderDto, OrderStatusTypes } from './dto/create-order.dto';
 import { UpdateDeliveryDto } from '../delivery/dto/update-delivery.dto';
+import { UpdateOrderDto } from './dto/update-order.dto';
 
 @Injectable()
 export class OrdersService {
@@ -24,6 +25,15 @@ export class OrdersService {
   async addOrder(order: CreateOrderDto) {
     const newOrder = await this.ordersRepository.create(order);
     return await this.ordersRepository.save(newOrder);
+  }
+
+  async updateOrder(id, order: UpdateOrderDto) {
+    await this.ordersRepository.update(id, order);
+    return await this.ordersRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
   }
 
   async changeOrderStatus(id) {
