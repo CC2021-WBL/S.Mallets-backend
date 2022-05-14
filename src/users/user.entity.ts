@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsEmail, IsInt, IsPositive, Length } from 'class-validator';
+import { IsEmail, IsNumberString, Length } from 'class-validator';
 
 import { Address } from '../addresses/address.entity';
 import { Role } from '../auth/types/role.enum';
@@ -30,9 +30,9 @@ export class User {
   surname: string;
 
   @Column()
-  @IsInt()
-  @IsPositive()
-  phoneNumber: number;
+  @IsNumberString()
+  @Length(7, 20)
+  phoneNumber: string;
 
   @Column('simple-array', { array: true, default: [Role.User] })
   roles: Role[];

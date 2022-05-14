@@ -51,16 +51,7 @@ export class AuthService {
       user.hash = undefined;
       return user;
     } catch (error: any) {
-      if (error?.code === PostgresErrorCode.UniqueViolation) {
-        throw new HttpException(
-          'User with that email already exists',
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-      throw new HttpException(
-        'Something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException('Wrong data', HttpStatus.CONFLICT);
     }
   }
 

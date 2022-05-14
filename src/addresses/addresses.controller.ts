@@ -1,8 +1,4 @@
 import { UpdateAddressDto } from './dto/update-address.dto';
-import {
-  FindByUserIdParams,
-  FindByAddressIdParams,
-} from './../utils/findByIdParams';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import {
@@ -10,6 +6,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -18,7 +16,6 @@ import {
 } from '@nestjs/common';
 
 import { AddressesService } from './addresses.service';
-import { UsersService } from './../users/users.service';
 import { Roles } from '../decorators/roles.decorators';
 import { Role } from '../auth/types/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guards';
@@ -29,7 +26,6 @@ import { AddressUserContract } from '../contracts/AddressUserContract.service';
 export class AddressesController {
   constructor(
     private readonly addressesService: AddressesService,
-    private readonly usersService: UsersService,
     private readonly addressUserContract: AddressUserContract,
   ) {}
   @Post('add')
@@ -53,6 +49,9 @@ export class AddressesController {
     @Param('addressId') addressId: string,
     @Body() addressData: UpdateAddressDto,
   ) {
+    if (Object.keys(addressData).length === 0) {
+      throw new HttpException('No content', HttpStatus.NO_CONTENT);
+    }
     const updatedAddress = await this.addressesService.updateAddressByAddressId(
       addressId,
       addressData,
