@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -17,5 +17,10 @@ export class OrdersController {
   @Post()
   async addOrder(@Body() addOrderData: CreateOrderDto) {
     return await this.ordersService.addOrder(addOrderData);
+  }
+
+  @Patch(':id')
+  async changeOrderStatus(@Param('id') id: string) {
+    return await this.ordersService.changeOrderStatus(id);
   }
 }
