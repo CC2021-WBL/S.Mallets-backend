@@ -1,8 +1,7 @@
 import {
-  IsInt,
   IsNotEmpty,
+  IsNumberString,
   IsOptional,
-  IsPositive,
   IsString,
   Length,
 } from 'class-validator';
@@ -20,8 +19,9 @@ export class UpdateUserDto {
   @IsOptional()
   surname?: string;
 
-  @IsInt()
-  @IsPositive()
+  @IsNumberString()
+  @IsNotEmpty()
+  @Length(7, 20)
   @IsOptional()
   phoneNumber?: number;
 }

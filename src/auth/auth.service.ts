@@ -7,7 +7,11 @@ import { PostgresErrorCode } from './../database/postgresErrorCodes.enum';
 import { TokenPayload } from './types/tokenPayload.interface';
 import { User } from './../users/user.entity';
 import { UsersService } from './../users/users.service';
-import { genPassword, verifyPassword } from './cryptography/passwordUtils';
+import {
+  changePasswordToHashInUserObj,
+  genPassword,
+  verifyPassword,
+} from './cryptography/passwordUtils';
 
 @Injectable()
 export class AuthService {
@@ -42,23 +46,12 @@ export class AuthService {
   async register(userData: CreateUserDto): Promise<User> {
     try {
       const hash = await genPassword(userData.password);
-      const user = await this.usersService.create({
-        ...userData,
-        hash: hash,
-      });
+      const readyUserData = changePasswordToHashInUserObj(userData, hash);
+      const user = await this.usersService.create(readyUserData);
       user.hash = undefined;
       return user;
     } catch (error: any) {
-      if (error?.code === PostgresErrorCode.UniqueViolation) {
-        throw new HttpException(
-          'User with that email already exists',
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-      throw new HttpException(
-        'Something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException('Wrong data', HttpStatus.CONFLICT);
     }
   }
 

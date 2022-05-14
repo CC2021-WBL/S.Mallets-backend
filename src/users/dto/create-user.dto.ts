@@ -1,8 +1,7 @@
 import {
   IsEmail,
-  IsInt,
   IsNotEmpty,
-  IsPositive,
+  IsNumberString,
   IsString,
   Length,
   MinLength,
@@ -23,7 +22,8 @@ export class CreateUserDto {
   @IsNotEmpty()
   @Length(2, 50)
   surname: string;
-  @IsInt()
-  @IsPositive()
-  phoneNumber: number;
+  @IsNumberString()
+  @IsNotEmpty()
+  @Length(7, 20)
+  phoneNumber: string;
 }
