@@ -5,25 +5,15 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 
-import { ProductsService } from '../products/products.service';
-import { TranslationsService } from '../translations/translations.service';
 import { Utilization } from '../translations/types/translation-utilization.enum';
 import { Translation } from '../translations/translation.entity';
 import { Product } from '../products/product.entity';
-
-// type CreateProductProps = {
-//   description: CreateTranslationDto;
-//   altText: CreateTranslationDto;
-//   productData: CreateProductDto;
-// };
 
 @Injectable()
 export class ProductTranslationContract {
   constructor(
     @InjectConnection()
     private readonly connection: Connection,
-    private readonly productService: ProductsService,
-    private readonly translationsService: TranslationsService,
   ) {}
   async createProduct(productData: CreateProductDto) {
     const descriptionData = prepareTranslationDto(

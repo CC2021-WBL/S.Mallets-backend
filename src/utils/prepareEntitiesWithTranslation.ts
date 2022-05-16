@@ -24,6 +24,5 @@ export const prepareEntityWithTranslation = (
       entityObject[key] = fieldsToChange[key];
     }
   }
-
   return entityObject;
 };

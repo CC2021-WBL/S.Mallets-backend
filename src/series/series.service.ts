@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { CreateSeriesDto } from './dto/create-series.dto';
 import { Series } from './series.entity';
 
 @Injectable()
@@ -12,19 +11,60 @@ export class SeriesService {
     private seriesRepository: Repository<Series>,
   ) {}
 
-  async createSeries(seriesData: CreateSeriesDto) {
-    const prepairedSeries = await this.seriesRepository.create(seriesData);
-    const addedSeries = await this.seriesRepository.save(prepairedSeries);
-    if (addedSeries) {
-      return addedSeries;
-    } else {
-      throw new HttpException('Invalid data', HttpStatus.PARTIAL_CONTENT);
+  async getOneSeries(id: number) {
+    const series = await this.seriesRepository
+      .createQueryBuilder('series')
+      .leftJoinAndSelect('series.seriesDescription', 'translations')
+      .leftJoinAndSelect('series.seriesAltText', 'translation')
+      .where('series.id = :id', { id: id })
+      .getOne();
+    if (series) {
+      return series;
     }
+    throw new HttpException('Not found series', HttpStatus.NOT_FOUND);
   }
 
-  // async updateSeries() {}
+  async getOneSeriesWithProducts(id: number) {
+    const series = await this.seriesRepository
+      .createQueryBuilder('series')
+      .leftJoinAndSelect('series.seriesDescription', 'translations')
+      .leftJoinAndSelect('series.seriesAltText', 'translation')
+      .leftJoinAndSelect('series.products', 'products')
+      .where('series.id = :id', { id: id })
+      .getOne();
+    if (series) {
+      return series;
+    }
+    throw new HttpException('Not found series', HttpStatus.NOT_FOUND);
+  }
 
-  // async getSeries() {}
+  async getAllSeries() {
+    const allSeries = await this.seriesRepository
+      .createQueryBuilder('series')
+      .leftJoinAndSelect('series.seriesDescription', 'translations')
+      .leftJoinAndSelect('series.seriesAltText', 'translation')
+      .getMany();
+    if (allSeries) {
+      return allSeries;
+    }
+    throw new HttpException('Not found series', HttpStatus.NOT_FOUND);
+  }
+
+  async getAllSeriesWithProducts() {
+    const allSeries = await this.seriesRepository
+      .createQueryBuilder('series')
+      .leftJoinAndSelect('series.seriesDescription', 'translations')
+      .leftJoinAndSelect('series.seriesAltText', 'translation')
+      .leftJoinAndSelect('series.products', 'products')
+      .getMany();
+    if (allSeries) {
+      return allSeries;
+    }
+    throw new HttpException('Not found series', HttpStatus.NOT_FOUND);
+  }
+
+  //TODO:
+  // async updateSeries() {}
 
   // async deleteSeries() {}
 }
