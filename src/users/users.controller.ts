@@ -5,6 +5,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   UseGuards,
@@ -29,10 +31,21 @@ export class UsersController {
     return user;
   }
 
+  @Get('with-address/:id')
+  @Roles(Role.User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async getUserWithAddress(@Param('id') id: string) {
+    const userWithAddress = await this.usersService.getUserWithAddress(id);
+    userWithAddress.hash = undefined;
+    return userWithAddress;
+  }
   @Patch(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async updateUser(@Param('id') id: string, @Body() userData: UpdateUserDto) {
+    if (Object.keys(userData).length === 0) {
+      throw new HttpException('No content', HttpStatus.NO_CONTENT);
+    }
     const updatedUser = await this.usersService.updateUser(userData, id);
     return updatedUser;
   }

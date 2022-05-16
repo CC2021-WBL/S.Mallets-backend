@@ -1,8 +1,7 @@
 import {
   IsEmail,
-  IsInt,
   IsNotEmpty,
-  IsPositive,
+  IsNumberString,
   IsString,
   Length,
   MinLength,
@@ -33,7 +32,8 @@ export class CreateUserDto {
   surname: string;
 
   @ApiProperty()
-  @IsInt()
-  @IsPositive()
-  phoneNumber: number;
+  @IsNumberString()
+  @IsNotEmpty()
+  @Length(7, 20)
+  phoneNumber: string;
 }
