@@ -30,7 +30,7 @@ export class OrdersController {
     @Param('id') id: string,
     @Body() updatedOrderData: UpdateOrderDto,
   ) {
-    console.log(`Delivery with id: ${id} has been updated.`);
+    console.log(`Order with id: ${id} has been updated.`);
     return await this.ordersService.updateOrder(id, updatedOrderData);
   }
 }

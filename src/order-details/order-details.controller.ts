@@ -6,10 +6,4 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('orderDetails')
 export class OrderDetailsController {
   constructor(private readonly orderDetailsService: OrderDetailsService) {}
-
-  @Get()
-  async getAll() {
-    console.log('Show all orders!');
-    return await this.orderDetailsService.getAll();
-  }
 }

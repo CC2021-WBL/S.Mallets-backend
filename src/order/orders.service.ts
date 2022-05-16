@@ -14,12 +14,11 @@ export class OrdersService {
   ) {}
 
   async getAll() {
-    console.log('Show all ways of delivery');
-    const delivery = await this.ordersRepository.find();
-    if (!delivery) {
+    const orders = await this.ordersRepository.find();
+    if (!orders) {
       throw new HttpException('Not found any delivery', HttpStatus.NOT_FOUND);
     }
-    return delivery;
+    return orders;
   }
 
   async addOrder(order: CreateOrderDto) {

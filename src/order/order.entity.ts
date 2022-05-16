@@ -53,13 +53,13 @@ export class Order {
   // RELATIONS OF THIS ENTITY
 
   @ManyToOne(() => User, (user) => user.orders)
-  user: User;
+  user!: User;
 
   @ManyToOne(() => Delivery, (delivery) => delivery.orders)
-  delivery: Delivery;
+  delivery!: Delivery;
 
   @ManyToOne(() => Address, (address) => address.orders)
-  address: Address;
+  address!: Address;
 
   @OneToMany(() => OrderDetails, (orderDetails) => orderDetails.order)
   orderDetails?: OrderDetails[];
