@@ -43,8 +43,8 @@ export class AddressesController {
   }
 
   @Patch(':addressId')
-  @Roles(Role.User)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.User)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   async updateAddress(
     @Param('addressId') addressId: string,
     @Body() addressData: UpdateAddressDto,
@@ -59,22 +59,24 @@ export class AddressesController {
     return updatedAddress;
   }
 
-  @Get('get')
-  @Roles(Role.User)
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  async getAddress(@Req() req: RequestWithUser) {
+  @Get('get/:addressId')
+  // @Roles(Role.User)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  async getAddress(@Param('addressId') addressId: string) {
+    console.log(addressId);
     const userAddress = await this.addressesService.getCurrentUserAddress(
-      req.user,
+      addressId,
     );
+    console.log(userAddress);
     return userAddress;
   }
 
-  @Delete()
-  @Roles(Role.User)
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  async deleteAddress(@Req() req: RequestWithUser) {
+  @Delete(':addressId')
+  // @Roles(Role.User)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  async deleteAddress(@Param(':addressId') addressId: string) {
     const isAddressDeleted = await this.addressUserContract.deleteAddress(
-      req.user.id,
+      addressId,
     );
     return isAddressDeleted;
   }

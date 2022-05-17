@@ -1,8 +1,8 @@
 {
-  "name": "smallets-back",
+  "name": "smallets-backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Server side for S.Mallets online shop",
+  "author": "DevsOnTheWaves",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

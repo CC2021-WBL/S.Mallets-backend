@@ -22,24 +22,24 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get(':id')
-  @Roles(Role.User)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.User)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   async getById(@Param('id') id: string) {
     const user = await this.usersService.findOneById(id);
     return user;
   }
 
   @Get('with-address/:id')
-  @Roles(Role.User)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.User)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   async getUserWithAddress(@Param('id') id: string) {
     const userWithAddress = await this.usersService.getUserWithAddress(id);
     userWithAddress.hash = undefined;
     return userWithAddress;
   }
   @Patch(':id')
-  @Roles(Role.User)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.User)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   async updateUser(@Param('id') id: string, @Body() userData: UpdateUserDto) {
     if (Object.keys(userData).length === 0) {
       throw new HttpException('No content', HttpStatus.NO_CONTENT);
@@ -49,8 +49,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @Roles(Role.User)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.User)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   async deleteUser(@Param('id') id: string) {
     const deleteResult = await this.usersService.deleteUser(id);
     return deleteResult;
