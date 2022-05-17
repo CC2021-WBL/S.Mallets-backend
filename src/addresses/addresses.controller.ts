@@ -20,7 +20,7 @@ import { Roles } from '../decorators/roles.decorators';
 import { Role } from '../auth/types/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guards';
 import RequestWithUser from '../auth/types/requestWithUser.interface';
-import { AddressUserContract } from '../contracts/AddressUserContract.service';
+import { AddressUserContract } from './../contracts/AddressUserContract.service';
 
 @Controller('addresses')
 export class AddressesController {
