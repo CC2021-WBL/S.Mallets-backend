@@ -11,8 +11,8 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
-  @Roles(Role.User)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.User)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   getAllProducts() {
     return 'products';
   }
