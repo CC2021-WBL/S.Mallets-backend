@@ -3,16 +3,22 @@ import 'reflect-metadata';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.enableCors();
+  app.enableCors({
+    origin: [
+      /https?:\/\/(([^/]+\.)?vercel\.app)$/i,
+      'http://localhost:3000',
+      'https://s-mallets-frontend.vercel.app/',
+    ],
+  });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
