@@ -7,7 +7,6 @@
     "type": "git"
   },
   "private": true,
-  "main": "dist/main.js",
   "license": "UNLICENSED",
   "engines": {
     "node": "16.x"
