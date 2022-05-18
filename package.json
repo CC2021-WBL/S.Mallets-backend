@@ -4,6 +4,7 @@
   "description": "Server side for S.Mallets online shop",
   "author": "DevsOnTheWaves",
   "private": true,
+  "main": "dist/main.js",
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
