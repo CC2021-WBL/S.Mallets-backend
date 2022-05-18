@@ -29,8 +29,8 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - name: Deploy to Vercel
-      run: npx vercel --token ${VERCEL_TEAM_ID} --prod
+      run: npx vercel --token ${VERCEL_TOKEN} --prod
       env:
-          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
