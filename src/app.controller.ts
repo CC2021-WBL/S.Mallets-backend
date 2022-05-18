@@ -1,8 +1,9 @@
-import { Controller } from '@nestjs/common';
-
-import { AuthService } from './auth/auth.service';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor(private authService: AuthService) {}
+  @Get()
+  async welcome() {
+    return 'Welcome to S.Mallets online shop';
+  }
 }
