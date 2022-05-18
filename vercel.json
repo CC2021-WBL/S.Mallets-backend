@@ -1,16 +1,16 @@
 {
   "version": 2,
+  "name": "s-mallets-backend",
   "builds": [
     {
-      "src": "src/main.ts",
+      "src": "dist/main.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/main.ts",
-      "methods": ["GET", "POST", "PATCH", "DELETE"]
+      "dest": "dist/main.js"
     }
   ]
 }
