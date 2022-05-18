@@ -3,14 +3,9 @@
   "version": "0.0.1",
   "description": "Server side for S.Mallets online shop",
   "author": "DevsOnTheWaves",
-  "repository": {
-    "type": "git"
-  },
   "private": true,
   "license": "UNLICENSED",
-  "engines": {
-    "node": "16.x"
-  },
+  "main": "src/main.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
