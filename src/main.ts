@@ -16,29 +16,20 @@ const whitelist = [
 ];
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: false,
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.enableCors({
+    origin: function (origin, callback) {
+      if (!origin || whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    allowedHeaders:
+      'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe, Authorization',
+    methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+    credentials: true,
   });
-  // app.use((req, res, next) => {
-  //   res.header('Access-Control-Allow-Origin', '*');
-  //   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  //   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
-  //   next();
-  // });
-  // app.enableCors();
-  // app.enableCors({
-  //   origin: function (origin, callback) {
-  //     if (!origin || whitelist.indexOf(origin) !== -1) {
-  //       callback(null, true);
-  //     } else {
-  //       callback(new Error('Not allowed by CORS'));
-  //     }
-  //   },
-  //   allowedHeaders:
-  //     'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe, Authorization',
-  //   methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-  //   credentials: true,
-  // });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
