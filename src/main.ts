@@ -26,10 +26,10 @@ async function bootstrap() {
     //     callback(new Error('Not allowed by CORS'));
     //   }
     // },
-    // allowedHeaders:
-    //   'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe, Authorization',
-    // methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-    // credentials: true,
+    allowedHeaders:
+      'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe, Authorization',
+    methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+    credentials: true,
   });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
