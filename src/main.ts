@@ -17,20 +17,20 @@ const whitelist = [
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.enableCors({
-    origin: '*',
-    // origin: function (origin, callback) {
-    //   if (!origin || whitelist.indexOf(origin) !== -1) {
-    //     callback(null, true);
-    //   } else {
-    //     callback(new Error('Not allowed by CORS'));
-    //   }
-    // },
-    allowedHeaders:
-      'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe, Authorization',
-    methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-    credentials: true,
-  });
+  app.enableCors();
+  // app.enableCors({
+  //   origin: function (origin, callback) {
+  //     if (!origin || whitelist.indexOf(origin) !== -1) {
+  //       callback(null, true);
+  //     } else {
+  //       callback(new Error('Not allowed by CORS'));
+  //     }
+  //   },
+  //   allowedHeaders:
+  //     'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe, Authorization',
+  //   methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+  //   credentials: true,
+  // });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
