@@ -13,11 +13,9 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    origin: [
-      /https?:\/\/(([^/]+\.)?vercel\.app)$/i,
-      'http://localhost:3000',
-      'https://s-mallets-frontend.vercel.app/',
-    ],
+    origin:true,
+    methods: ['GET', 'PATCH', 'PUT', 'DELETE'],
+    credentials: true,
   });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
