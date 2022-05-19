@@ -14,7 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const whitelist = ['vercel.app'];
   app.enableCors({
-    origin:*,
+    origin: true,
     methods: ['GET', 'PATCH', 'PUT', 'DELETE'],
   });
   app.use((req, res, next) => {
