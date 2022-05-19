@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import cookieParser from 'cookie-parser';
+import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -14,7 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
     origin: [
-      /https?:\/\/(([^/]+\.)?vercel\.app)$/i,
+      /\.vercel\.app$/,
       'http://localhost:3000',
       'https://s-mallets-frontend.vercel.app/',
     ],
