@@ -10,14 +10,22 @@ import { ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
 
+const whitelist = [
+  /\.vercel\.app$/,
+  'http://localhost:3000',
+  'https://s-mallets-frontend.vercel.app/',
+];
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    origin: [
-      /\.vercel\.app$/,
-      'http://localhost:3000',
-      'https://s-mallets-frontend.vercel.app/',
-    ],
+    origin: function (origin, callback) {
+      if (!origin || whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
   });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
