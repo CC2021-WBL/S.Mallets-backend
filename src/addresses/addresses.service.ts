@@ -15,7 +15,6 @@ export class AddressesService {
     const address = await this.addressRepository.findOne({
       where: { id: addressId },
     });
-    console.log(address);
     if (address) {
       return address;
     }
