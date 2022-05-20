@@ -20,27 +20,35 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   @IsString()
-  productName: string;
+  productModel: string;
 
   @OneToOne(() => Translation)
   @JoinColumn()
   productDescription: Translation;
 
-  @Column()
+  @Column({
+    type: 'float',
+  })
   @IsNumber()
   price: number;
 
-  @Column()
+  @Column({
+    type: 'float',
+  })
   @IsNumber()
   headDiameter: number;
 
-  @Column()
+  @Column({
+    type: 'float',
+  })
   @IsNumber()
   stickLength: number;
 
-  @Column()
+  @Column({
+    type: 'float',
+  })
   @IsNumber()
   weight: number;
 
@@ -55,7 +63,7 @@ export class Product {
   productAltText: Translation;
 
   @ManyToOne(() => Series, (series) => series.products)
-  seriesId: Series;
+  series: Series;
 
   @UpdateDateColumn()
   modifiedAt!: Date;

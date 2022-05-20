@@ -9,6 +9,7 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 
@@ -17,28 +18,32 @@ import { Roles } from '../decorators/roles.decorators';
 import { Role } from '../auth/types/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guards';
 import { ApiTags } from '@nestjs/swagger';
+import RequestWithUser from '../auth/types/requestWithUser.interface';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get(':id')
+  @Get()
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async getById(@Param('id') id: string) {
-    const user = await this.usersService.findOneById(id);
+  async getById(@Req() req: RequestWithUser) {
+    const user = await this.usersService.findOneById(req.user.id);
     return user;
   }
 
-  @Get('with-address/:id')
+  @Get('with-address')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async getUserWithAddress(@Param('id') id: string) {
-    const userWithAddress = await this.usersService.getUserWithAddress(id);
+  async getUserWithAddress(@Req() req: RequestWithUser) {
+    const userWithAddress = await this.usersService.getUserWithAddress(
+      req.user.id,
+    );
     userWithAddress.hash = undefined;
     return userWithAddress;
   }
+
   @Patch(':id')
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -50,11 +55,52 @@ export class UsersController {
     return updatedUser;
   }
 
-  @Delete(':id')
+  @Delete()
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async deleteUser(@Param('id') id: string) {
-    const deleteResult = await this.usersService.deleteUser(id);
+  async deleteUser(@Req() req: RequestWithUser) {
+    const deleteResult = await this.usersService.deleteUser(req.user.id);
+    return deleteResult;
+  }
+
+  //----------------------------------------------------ADMIN-ROUTES----------------------------------------------------------
+
+  @Get('admin/:userId')
+  // @Roles(Role.Admin)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  async getAsAdminById(@Param('userId') userId: string) {
+    const user = await this.usersService.findOneById(userId);
+    return user;
+  }
+
+  @Get('admin/with-address/:id')
+  // @Roles(Role.Admin)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  async getAsAdminUserWithAddress(@Param('id') id: string) {
+    const userWithAddress = await this.usersService.getUserWithAddress(id);
+    userWithAddress.hash = undefined;
+    return userWithAddress;
+  }
+
+  @Patch('admin/:userId')
+  // @Roles(Role.Admin)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  async updateUserAsAdmin(
+    @Param('userId') userId: string,
+    @Body() userData: UpdateUserDto,
+  ) {
+    if (Object.keys(userData).length === 0) {
+      throw new HttpException('No content', HttpStatus.NO_CONTENT);
+    }
+    const updatedUser = await this.usersService.updateUser(userData, userId);
+    return updatedUser;
+  }
+
+  @Delete('admin/:userId')
+  // @Roles(Role.Admin)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  async deleteUserByAdmin(@Param('userId') userId: string) {
+    const deleteResult = await this.usersService.deleteUser(userId);
     return deleteResult;
   }
 }

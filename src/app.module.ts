@@ -8,13 +8,15 @@ import { AddressesModule } from './addresses/addresses.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
-import { OrdersModule } from './order/orders.module';
-import { ProductsModule } from './products/products.module';
-import { UsersModule } from './users/users.module';
 import { DeliveryModule } from './delivery/delivery.module';
-import { ProductsController } from './products/products.controller';
 import { OrderDetails } from './order-details/order-details.entity';
 import { OrderDetailsModule } from './order-details/order-details.module';
+import { OrdersModule } from './order/orders.module';
+import { ProductsController } from './products/products.controller';
+import { ProductsModule } from './products/products.module';
+import { SeriesModule } from './series/series.module';
+import { TranslationsModule } from './translations/translations.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { OrderDetailsModule } from './order-details/order-details.module';
     OrdersModule,
     OrderDetailsModule,
     ProductsModule,
+    SeriesModule,
+    TranslationsModule,
   ],
   controllers: [AppController],
   providers: [

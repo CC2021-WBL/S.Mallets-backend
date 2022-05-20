@@ -1,8 +1,7 @@
 import * as bcrypt from 'bcrypt';
 
 import { CreateUserDto } from './../../users/dto/create-user.dto';
-import { HashUser } from './../../users/types/hash-user-type';
-import { User } from '../../users/user.entity';
+import { HashUser } from '../../users/types/hash-user-type';
 
 export const genPassword = async (password: string) => {
   const hash = await bcrypt.hash(password, 10);
