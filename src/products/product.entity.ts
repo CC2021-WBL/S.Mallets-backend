@@ -26,19 +26,27 @@ export class Product {
   @JoinColumn()
   productDescription: Translation;
 
-  @Column()
+  @Column({
+    type: 'float',
+  })
   @IsNumber()
   price: number;
 
-  @Column()
+  @Column({
+    type: 'float',
+  })
   @IsNumber()
   headDiameter: number;
 
-  @Column()
+  @Column({
+    type: 'float',
+  })
   @IsNumber()
   stickLength: number;
 
-  @Column()
+  @Column({
+    type: 'float',
+  })
   @IsNumber()
   weight: number;
 
