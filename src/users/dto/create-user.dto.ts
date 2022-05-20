@@ -21,7 +21,7 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   @Length(2, 50)
-  surname: string;
+  lastname: string;
   @IsNumberString()
   @IsNotEmpty()
   @Length(7, 20)

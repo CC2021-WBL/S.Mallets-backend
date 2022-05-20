@@ -17,7 +17,7 @@ export class UpdateUserDto {
   @IsNotEmpty()
   @Length(2, 50)
   @IsOptional()
-  surname?: string;
+  lastname?: string;
 
   @IsNumberString()
   @IsNotEmpty()

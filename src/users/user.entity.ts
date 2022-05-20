@@ -27,7 +27,7 @@ export class User {
 
   @Column()
   @Length(2, 50)
-  surname: string;
+  lastname: string;
 
   @Column()
   @IsNumberString()
