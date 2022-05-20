@@ -15,13 +15,11 @@ import { Role } from '../auth/types/role.enum';
 import { Roles } from '../decorators/roles.decorators';
 import { RolesGuard } from './../auth/guards/roles.guards';
 import { SeriesService } from './series.service';
-import { TranslationsService } from '../translations/translations.service';
 
 @Controller('series')
 export class SeriesController {
   constructor(
     private readonly seriesService: SeriesService,
-    private readonly translationsService: TranslationsService,
     private readonly seriesTranslationContract: SeriesTranslationContract,
   ) {}
 

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { Role } from 'src/auth/types/role.enum';
 import { Roles } from 'src/decorators/roles.decorators';
 
@@ -17,23 +25,29 @@ export class ProductsController {
     private readonly productTranslationContract: ProductTranslationContract,
   ) {}
 
-  @Post()
+  @Post(':seriesId')
   @Roles(Role.Admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async addProduct(@Body() productData: CreateProductDto) {
+  async addProduct(
+    @Param('seriesId', ParseIntPipe) seriesId: number,
+    @Body() productData: CreateProductDto,
+  ) {
     const addedProduct = await this.productTranslationContract.createProduct(
       productData,
+      seriesId,
     );
     return addedProduct;
   }
 
   @Get()
   async getAllProducts() {
-    return 'products';
+    const allproducts = await this.productsService.getAllProducts();
+    return allproducts;
   }
 
   @Get(':prodId')
-  async getSingleProduct() {
-    return 'single product';
+  async getSingleProduct(@Param('prodId', ParseIntPipe) prodId: number) {
+    const product = await this.productsService.getSingleProduct(prodId);
+    return product;
   }
 }

@@ -1,3 +1,4 @@
+import { SeriesService } from './../series/series.service';
 import { prepareEntityWithTranslation } from '../utils/prepareEntitiesWithTranslation';
 import { prepareTranslationDto } from '../utils/prepareTranslationDto';
 import { CreateProductDto } from '../products/dto/create-product.dto';
@@ -8,14 +9,23 @@ import { Connection } from 'typeorm';
 import { Utilization } from '../translations/types/translation-utilization.enum';
 import { Translation } from '../translations/translation.entity';
 import { Product } from '../products/product.entity';
+import { Series } from '../series/series.entity';
 
 @Injectable()
 export class ProductTranslationContract {
   constructor(
     @InjectConnection()
     private readonly connection: Connection,
+    private readonly seriesService: SeriesService,
   ) {}
-  async createProduct(productData: CreateProductDto) {
+  async createProduct(productData: CreateProductDto, seriesId: number) {
+    const series = await this.seriesService.getOneSeriesWithProducts(seriesId);
+    if (!series) {
+      throw new HttpException(
+        'You want to add product to not existed series',
+        HttpStatus.NOT_FOUND,
+      );
+    }
     const descriptionData = prepareTranslationDto(
       productData.productModel,
       Utilization.Description,
@@ -43,13 +53,18 @@ export class ProductTranslationContract {
         prepairedAltText,
       ]);
       const productToDB = prepareEntityWithTranslation(productData, {
-        productDesctiption: description,
+        productDescription: description,
         productAltText: altText,
       });
-      console.log(productToDB);
       const prepairedProduct = queryRunner.manager.create(Product, productToDB);
-      console.log(prepairedProduct);
+      prepairedProduct.series = series;
       const [addedProduct] = await queryRunner.manager.save([prepairedProduct]);
+      await queryRunner.manager
+        .createQueryBuilder()
+        .relation(Series, 'products')
+        .of(series)
+        .add(addedProduct);
+
       await queryRunner.commitTransaction();
       return addedProduct;
     } catch (error) {

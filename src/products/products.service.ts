@@ -1,8 +1,8 @@
-import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './product.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -22,7 +22,7 @@ export class ProductsService {
   }
 
   async getSingleProduct(prodId: number) {
-    const product = this.findProductById(prodId);
+    const product = await this.findProductById(prodId);
     return { ...product };
   }
 

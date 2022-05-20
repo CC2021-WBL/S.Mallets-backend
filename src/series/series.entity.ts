@@ -36,7 +36,7 @@ export class Series {
   @JoinColumn()
   seriesAltText: Translation;
 
-  @OneToMany(() => Product, (product) => product.seriesId)
+  @OneToMany(() => Product, (product) => product.series)
   products?: Product[];
 
   @UpdateDateColumn()

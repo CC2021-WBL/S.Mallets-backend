@@ -53,7 +53,7 @@ export class Product {
   productAltText: Translation;
 
   @ManyToOne(() => Series, (series) => series.products)
-  seriesId: Series;
+  series: Series;
 
   @UpdateDateColumn()
   modifiedAt!: Date;
