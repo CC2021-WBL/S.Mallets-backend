@@ -1,10 +1,15 @@
 import { Address } from './../addresses/address.entity';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { UpdateUserDto } from './dto/update-user.dto';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { HashUser } from './types/hash-user-type';
 import { User } from './user.entity';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -74,10 +79,7 @@ export class UsersService {
     if (user) {
       return user;
     }
-    throw new HttpException(
-      'User with this email does not exist',
-      HttpStatus.NOT_FOUND,
-    );
+    throw new UnauthorizedException();
   }
 
   async findOneByCurrentField(fieldName: keyof User, value: any) {

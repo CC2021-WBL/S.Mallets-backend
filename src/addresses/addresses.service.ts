@@ -1,6 +1,4 @@
 import { UpdateAddressDto } from './dto/update-address.dto';
-import { CreateAddressDto } from './dto/create-address.dto';
-import { User } from './../users/user.entity';
 import { Address } from './address.entity';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,21 +11,14 @@ export class AddressesService {
     private addressRepository: Repository<Address>,
   ) {}
 
-  async getCurrentUserAddress(user: User) {
-    if (!user.address) {
-      throw new HttpException(
-        `User doesn't have assigned address`,
-        HttpStatus.NO_CONTENT,
-      );
-    } else {
-      const address = this.addressRepository.findOne({
-        where: { id: user.address },
-      });
-      if (address) {
-        return address;
-      }
-      throw new HttpException('Not found address', HttpStatus.NOT_FOUND);
+  async getCurrentUserAddress(addressId: string) {
+    const address = await this.addressRepository.findOne({
+      where: { id: addressId },
+    });
+    if (address) {
+      return address;
     }
+    throw new HttpException('Not found address', HttpStatus.NOT_FOUND);
   }
 
   async updateAddressByAddressId(id: string, addressData: UpdateAddressDto) {

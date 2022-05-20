@@ -41,3 +41,4 @@ id_rsa_priv.pem
 
 # typeorm
 .ormconfig.json
+.vercel
