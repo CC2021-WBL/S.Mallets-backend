@@ -3,7 +3,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { PostgresErrorCode } from './../database/postgresErrorCodes.enum';
 import { TokenPayload } from './types/tokenPayload.interface';
 import { User } from './../users/user.entity';
 import { UsersService } from './../users/users.service';
@@ -38,7 +37,7 @@ export class AuthService {
       iat: Date.now(),
     };
     const jwt = this.jwtService.sign(payload);
-    return `jwt=${jwt}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+    return `jwt=${jwt}; SameSite=None; Secure; HttpOnly; Path=/; Max-Age=${this.configService.get(
       'JWT_EXPIRATION_TIME',
     )}`;
   }
