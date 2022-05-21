@@ -17,21 +17,21 @@ async function bootstrap() {
     origin:
       'https://s-mallets-frontend-git-cookie-fix-devsonthewaves.vercel.app',
     credentials: true,
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
-    allowedHeaders: [
-      'Content-Type',
-      'Authorization',
-      'Cookie',
-      'X-CSRF-Token',
-      'X-Requested-With',
-      'Accept',
-      'Accept-Version',
-      'Content-Length',
-      'Content-MD5',
-      'Date',
-      'X-Api-Version',
-    ],
-    exposedHeaders: ['Set-Cookie'],
+    // methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
+    // allowedHeaders: [
+    //   'Content-Type',
+    //   'Authorization',
+    //   'Cookie',
+    //   'X-CSRF-Token',
+    //   'X-Requested-With',
+    //   'Accept',
+    //   'Accept-Version',
+    //   'Content-Length',
+    //   'Content-MD5',
+    //   'Date',
+    //   'X-Api-Version',
+    // ],
+    // exposedHeaders: ['Set-Cookie'],
   });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
