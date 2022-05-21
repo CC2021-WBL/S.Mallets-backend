@@ -14,10 +14,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    origin: [
+    origin:
       'https://s-mallets-frontend-git-cookie-fix-devsonthewaves.vercel.app',
-      'http://localhost:3000',
-    ],
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
     allowedHeaders: [
