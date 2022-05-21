@@ -9,10 +9,13 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
-
+// const allowed = []
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.enableCors();
+  app.enableCors({
+    origin: `https://s-mallets-frontend-git-cookie-fix-devsonthewaves.vercel.app/`,
+    credentials: true,
+  });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
