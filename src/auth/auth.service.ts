@@ -37,18 +37,18 @@ export class AuthService {
       iat: Date.now(),
     };
     const jwt = this.jwtService.sign(payload);
-    // return {
-    //   jwt: jwt,
-    //   options: {
-    //     sameSite: 'none',
-    //     secure: true,
-    //     httpOnly: true,
-    //     maxAge: this.configService.get('JWT_EXPIRATION_TIME'),
-    //   },
-    // };
-    return `jwt=${jwt}; SameSite=None; Secure; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      'JWT_EXPIRATION_TIME',
-    )}`;
+    return {
+      jwt: jwt,
+      options: {
+        sameSite: 'none',
+        secure: true,
+        httpOnly: true,
+        maxAge: this.configService.get('JWT_EXPIRATION_TIME'),
+      },
+    };
+    // return `jwt=${jwt}; SameSite=None; Secure; HttpOnly; Path=/; Max-Age=${this.configService.get(
+    //   'JWT_EXPIRATION_TIME',
+    // )}`;
   }
 
   async register(userData: CreateUserDto): Promise<User> {
