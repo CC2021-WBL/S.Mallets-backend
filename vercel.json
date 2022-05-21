@@ -13,7 +13,7 @@
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "http://localhost, https://s-mallets-backend-git-c-f-v-devsonthewaves.vercel.app, https://s-mallets-frontend.vercel.app/"
+          "value": "http://localhost, https://s-mallets-frontend-git-cookie-fix-devsonthewaves.vercel.app, https://s-mallets-frontend.vercel.app/"
         },
         {
           "key": "Access-Control-Allow-Methods",
