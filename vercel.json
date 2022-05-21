@@ -13,7 +13,7 @@
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "http://localhost:3000/, http://localhost:3001/, 'https://s-mallets-frontend-3k485t7ab-devsonthewaves.vercel.app/'  https://s-mallets-frontend.vercel.app/"
+          "value": "http://localhost:3000/, http://localhost:3001/, 'https://s-mallets-frontend-fpkqy2rzt-devsonthewaves.vercel.app/'  https://s-mallets-frontend.vercel.app/"
         },
         {
           "key": "Access-Control-Allow-Methods",
