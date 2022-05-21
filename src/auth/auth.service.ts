@@ -46,7 +46,7 @@ export class AuthService {
     //     maxAge: this.configService.get('JWT_EXPIRATION_TIME'),
     //   },
     // };
-    return `jwt=${jwt}; SameSite=None; Secure; Domain=https://s-mallets-frontend-git-cookie-fix-devsonthewaves.vercel.app; HttpOnly; Path=/; Max-Age=${this.configService.get(
+    return `jwt=${jwt}; SameSite=None; Secure; HttpOnly; Path=/; Max-Age=${this.configService.get(
       'JWT_EXPIRATION_TIME',
     )}`;
   }
