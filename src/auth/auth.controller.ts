@@ -31,8 +31,8 @@ export class AuthController {
   @Post('login')
   async login(@Req() req: RequestWithUser, @Res() res: Response) {
     const cookie = await this.authService.getCookieWithJwt(req.user);
-    res.setHeader('Set-Cookie', cookie);
-    // res.cookie('smalletsToken', cookie.jwt);
+    // res.setHeader('Set-Cookie', cookie);
+    res.cookie('smalletsToken', cookie.jwt);
     req.user.hash = undefined;
     return res.send(req.user);
   }
