@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import cookieParser from 'cookie-parser';
+import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -14,24 +14,27 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
-    origin:
+    origin: [
       'https://s-mallets-frontend-git-cookie-fix-devsonthewaves.vercel.app',
+      'http://localhost:3000',
+    ],
     credentials: true,
-    // methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
-    // allowedHeaders: [
-    //   'Content-Type',
-    //   'Authorization',
-    //   'Cookie',
-    //   'X-CSRF-Token',
-    //   'X-Requested-With',
-    //   'Accept',
-    //   'Accept-Version',
-    //   'Content-Length',
-    //   'Content-MD5',
-    //   'Date',
-    //   'X-Api-Version',
-    // ],
-    // exposedHeaders: ['Set-Cookie'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Cookie',
+      'X-CSRF-Token',
+      'X-Requested-With',
+      'Accept',
+      'Accept-Version',
+      'Content-Length',
+      'Content-MD5',
+      'Date',
+      'X-Api-Version',
+      'credentials',
+    ],
+    exposedHeaders: ['Set-Cookie'],
   });
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
