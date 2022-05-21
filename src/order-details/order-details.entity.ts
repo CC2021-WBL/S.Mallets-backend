@@ -1,4 +1,3 @@
-import { Product } from 'src/products/product.entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,21 +6,52 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Product } from 'src/products/product.entity';
 
-import { Order } from '../order/order.entity';
-import {
-  HeadDiameterTypes,
-  Ranges,
-  StickLengthTypes,
-  WeightTypes,
-} from '../utils/ranges';
+import { Order } from '../orders/order.entity';
+import { Ranges } from '../utils/ranges';
 
 @Entity('order_details')
 export class OrderDetails {
-  // COLUMNS IN ALL ENTITIES
-
   @PrimaryGeneratedColumn('uuid')
   id!: string;
+
+  // RELATIONS OF THIS ENTITY
+
+  @ManyToOne(() => Order, (order) => order.orderDetails)
+  order?: Order;
+
+  @ManyToOne(() => Product)
+  product!: Product;
+
+  // COLUMNS IN THIS ENTITY
+
+  @Column({
+    type: 'smallint',
+  })
+  quantity: Ranges<1, 50>;
+
+  @Column({
+    name: 'head_diameter',
+    type: 'float',
+  })
+  headDiameter: number;
+  // headDiameter: HeadDiameterTypes;
+
+  @Column({
+    name: 'stick_length',
+    type: 'float',
+  })
+  stickLength: number;
+  // stickLength: StickLengthTypes;
+
+  @Column({
+    type: 'float',
+  })
+  weight: number;
+  // weight: WeightTypes;
+
+  // TIMESTAMPS
 
   @CreateDateColumn({
     name: 'created_at',
@@ -32,36 +62,4 @@ export class OrderDetails {
     name: 'modified_at',
   })
   modifiedAt!: Date;
-
-  // COLUMNS IN THIS ENTITY
-
-  @Column({
-    type: 'smallint',
-  })
-  quantity: Ranges<1, 100>;
-
-  @Column({
-    name: 'head_diameter',
-    type: 'smallint',
-  })
-  headDiameter: HeadDiameterTypes;
-
-  @Column({
-    name: 'stick_length',
-    type: 'smallint',
-  })
-  stickLength: StickLengthTypes;
-
-  @Column({
-    type: 'smallint',
-  })
-  weight: WeightTypes;
-
-  // RELATIONS OF THIS ENTITY
-
-  @ManyToOne(() => Order, (order) => order.orderDetails)
-  order!: Order;
-
-  @ManyToOne(() => Product, (product) => product.orderDetails)
-  product!: Product;
 }

@@ -20,7 +20,7 @@ export class DeliveryService {
     return delivery;
   }
 
-  async findOneById(id: string) {
+  async findOneById(id: number) {
     const delivery = await this.deliveryRepository.findOne({
       where: {
         id: id,
@@ -40,7 +40,7 @@ export class DeliveryService {
     return await this.deliveryRepository.save(newDelivery);
   }
 
-  async updateDelivery(id, delivery: UpdateDeliveryDto) {
+  async updateDelivery(id: number, delivery: UpdateDeliveryDto) {
     await this.deliveryRepository.update(id, delivery);
     return await this.deliveryRepository.findOne({
       where: {
@@ -49,7 +49,7 @@ export class DeliveryService {
     });
   }
 
-  async deleteDelivery(id) {
+  async deleteDelivery(id: number) {
     return await this.deliveryRepository.delete(id);
   }
 }

@@ -10,7 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { DeliveryModule } from './delivery/delivery.module';
 import { OrderDetailsModule } from './order-details/order-details.module';
-import { OrdersModule } from './order/orders.module';
+import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { SeriesModule } from './series/series.module';
 import { TranslationsModule } from './translations/translations.module';

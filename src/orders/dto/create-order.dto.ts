@@ -1,14 +1,13 @@
-import {
-  IsEmpty,
-  IsNotEmpty,
-  IsNumber,
-  IsPositive,
-  IsString,
-} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumberString,
+  IsString,
+  Length,
+} from 'class-validator';
+
 import { Delivery } from '../../delivery/delivery.entity';
-import { User } from '../../users/user.entity';
-import { Address } from '../../addresses/address.entity';
 
 export enum OrderStatusTypes {
   WAITING_FOR_PAYMENT = 'Waiting for payment',
@@ -33,21 +32,40 @@ export class CreateOrderDto {
   @IsNotEmpty()
   delivery!: Delivery;
 
-  @ApiProperty({
-    description: 'Reference to user',
-    default: 'eff74690-f5bd-4c67-8171-6e22d5393c0e',
-    type: () => User,
-  })
   @IsString()
   @IsNotEmpty()
-  user!: User;
+  @Length(2, 50)
+  name: string;
 
-  @ApiProperty({
-    description: 'Reference to address',
-    default: 'ab68ba60-e0d1-4eb9-9f5a-612d2fa06c0e',
-    type: () => Address,
-  })
   @IsString()
   @IsNotEmpty()
-  address!: Address;
+  @Length(2, 50)
+  lastname: string;
+
+  @IsEmail()
+  email: string;
+
+  @IsNumberString()
+  @Length(7, 20)
+  phoneNumber: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Length(4, 60)
+  country: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Length(1, 70)
+  city: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Length(1, 10)
+  numberOfHouse: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Length(4, 15)
+  zipCode: string;
 }

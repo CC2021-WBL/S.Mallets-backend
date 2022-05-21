@@ -6,12 +6,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Order } from '../order/order.entity';
+
+import { Order } from '../orders/order.entity';
 
 @Entity()
 export class Delivery {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Column({
     name: 'delivery_name',

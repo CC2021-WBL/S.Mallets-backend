@@ -11,8 +11,8 @@ import {
 import { IsEmail, IsNumberString, Length } from 'class-validator';
 
 import { Address } from '../addresses/address.entity';
+import { Order } from '../orders/order.entity';
 import { Role } from '../auth/types/role.enum';
-import { Order } from '../order/order.entity';
 
 @Entity('users')
 export class User {

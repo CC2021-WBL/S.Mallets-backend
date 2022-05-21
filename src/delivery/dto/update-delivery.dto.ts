@@ -1,12 +1,11 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsPositive,
   IsString,
   Length,
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateDeliveryDto {
   @ApiProperty()
@@ -25,7 +24,6 @@ export class UpdateDeliveryDto {
 
   @ApiProperty()
   @IsNumber()
-  @IsPositive()
   @IsNotEmpty()
   @IsOptional()
   deliveryPriceEuro?: number;

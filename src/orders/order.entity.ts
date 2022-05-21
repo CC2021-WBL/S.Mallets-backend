@@ -1,4 +1,3 @@
-import { Address } from 'src/addresses/address.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,29 +7,16 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { IsEmail, IsNumberString, Length } from 'class-validator';
+
 import { Delivery } from '../delivery/delivery.entity';
-import { User } from '../users/user.entity';
 import { OrderDetails } from '../order-details/order-details.entity';
 import { OrderStatusTypes } from './dto/create-order.dto';
 
-@Entity('order')
+@Entity('orders')
 export class Order {
-  // COLUMNS IN ALL ENTITIES
-
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-
-  @CreateDateColumn({
-    name: 'created_at',
-  })
-  createdAt!: Date;
-
-  @UpdateDateColumn({
-    name: 'modified_at',
-  })
-  modifiedAt!: Date;
-
-  // COLUMNS IN THIS ENTITY
 
   @Column({
     name: 'order_status',
@@ -50,17 +36,58 @@ export class Order {
   @Column({ nullable: true, name: 'message_from_user' })
   messageFromUser?: string;
 
-  // RELATIONS OF THIS ENTITY
+  @Column()
+  @Length(2, 50)
+  name: string;
 
-  @ManyToOne(() => User, (user) => user.orders)
-  user!: User;
+  @Column()
+  @Length(2, 50)
+  lastname: string;
 
-  @ManyToOne(() => Delivery, (delivery) => delivery.orders)
+  @Column()
+  @IsEmail()
+  email: string;
+
+  @Column()
+  @IsNumberString()
+  @Length(7, 20)
+  phoneNumber: string;
+
+  @Column()
+  @Length(4, 60)
+  country: string;
+
+  @Column()
+  @Length(1, 70)
+  city: string;
+
+  @Column()
+  @Length(1, 70)
+  street: string;
+
+  @Column()
+  @Length(1, 10)
+  numberOfHouse: string;
+
+  @Column()
+  @Length(4, 15)
+  zipCode: string;
+
+  @ManyToOne(() => Delivery)
   delivery!: Delivery;
-
-  @ManyToOne(() => Address, (address) => address.orders)
-  address!: Address;
 
   @OneToMany(() => OrderDetails, (orderDetails) => orderDetails.order)
   orderDetails?: OrderDetails[];
+
+  // TIMESTAMPS
+
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  createdAt!: Date;
+
+  @UpdateDateColumn({
+    name: 'modified_at',
+  })
+  modifiedAt!: Date;
 }

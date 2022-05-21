@@ -1,8 +1,8 @@
-import { IsString, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Delivery } from '../../delivery/delivery.entity';
-import { User } from '../../users/user.entity';
+import { IsString, Length } from 'class-validator';
+
 import { Address } from '../../addresses/address.entity';
+import { Delivery } from '../../delivery/delivery.entity';
 
 export class UpdateOrderDto {
   @ApiProperty({
@@ -19,13 +19,6 @@ export class UpdateOrderDto {
     type: () => Delivery,
   })
   delivery?: Delivery;
-
-  @ApiProperty({
-    description: 'Reference to user',
-    default: 'eff74690-f5bd-4c67-8171-6e22d5393c0e',
-    type: () => User,
-  })
-  user?: User;
 
   @ApiProperty({
     description: 'Reference to address',
