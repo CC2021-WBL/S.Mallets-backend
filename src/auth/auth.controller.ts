@@ -33,8 +33,10 @@ export class AuthController {
     const cookie = await this.authService.getCookieWithJwt(req.user);
     res.setHeader('Set-Cookie', cookie);
     // res.cookie('smalletsToken', cookie.jwt);
+    // req.user.token = cookie;
     req.user.hash = undefined;
-    return res.send(req.user);
+    const data = { ...req.user, token: cookie };
+    return res.send(data);
   }
 
   @UseGuards(JwtAuthGuard)
