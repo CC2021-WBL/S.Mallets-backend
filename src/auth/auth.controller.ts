@@ -15,7 +15,7 @@ import {
 import { AuthService } from './auth.service';
 import RequestWithUser from './types/requestWithUser.interface';
 import { ApiTags } from '@nestjs/swagger';
-import { CookieOptions, Response } from 'express';
+import { Response } from 'express';
 
 @ApiTags('auth')
 @Controller('auth')

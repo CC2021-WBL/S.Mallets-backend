@@ -34,11 +34,11 @@ export class ProductsController {
     @Param('seriesId', ParseIntPipe) seriesId: number,
     @Body() productData: CreateProductDto,
   ) {
-    const addedProduct = await this.productTranslationContract.createProduct(
+    const isProductAdded = await this.productTranslationContract.createProduct(
       productData,
       seriesId,
     );
-    return addedProduct;
+    return isProductAdded;
   }
 
   @Get()

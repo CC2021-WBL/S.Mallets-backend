@@ -53,10 +53,10 @@ export class Product {
   weight: number;
 
   @Column({
-    type: 'text',
+    type: 'simple-array',
+    default: [],
   })
-  @IsBase64()
-  productImage: string;
+  productImages: string[];
 
   @OneToOne(() => Translation)
   @JoinColumn()

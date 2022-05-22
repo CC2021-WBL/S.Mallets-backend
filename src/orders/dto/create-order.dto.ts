@@ -62,7 +62,7 @@ export class CreateOrderDto {
   @IsString()
   @IsNotEmpty()
   @Length(1, 10)
-  numberOfHouse: string;
+  streetAndNumber: string;
 
   @IsString()
   @IsNotEmpty()

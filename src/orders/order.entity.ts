@@ -67,7 +67,7 @@ export class Order {
 
   @Column()
   @Length(1, 10)
-  numberOfHouse: string;
+  streetAndNumber: string;
 
   @Column()
   @Length(4, 15)
