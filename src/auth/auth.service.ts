@@ -37,11 +37,12 @@ export class AuthService {
       iat: Date.now(),
     };
     const jwt = this.jwtService.sign(payload);
-    return `jwt=${jwt}; SameSite=None; Secure; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      'JWT_EXPIRATION_TIME',
-    )}`;
+    return jwt;
+    // return `jwt=${jwt}; SameSite=None; Secure; HttpOnly; Max-Age=${this.configService.get(
+    //   'JWT_EXPIRATION_TIME',
+    // )}`;
   }
-
+  // TODO: update with jwt
   async register(userData: CreateUserDto): Promise<User> {
     try {
       const hash = await genPassword(userData.password);
