@@ -14,7 +14,7 @@ import {
 
 import { AuthService } from './auth.service';
 import RequestWithUser from './types/requestWithUser.interface';
-import { Response } from 'express';
+import { CookieOptions, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -32,9 +32,11 @@ export class AuthController {
   async login(@Req() req: RequestWithUser, @Res() res: Response) {
     const cookie = await this.authService.getCookieWithJwt(req.user);
     // res.setHeader('Set-Cookie', cookie);
-    res.cookie('smalletsToken', cookie);
+    // res.cookie('smalletsToken', cookie);
     req.user.hash = undefined;
-    return res.send(req.user);
+    // return res.send(req.user);
+    const data = { ...req.user, token: cookie };
+    return res.send(data);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -42,6 +44,7 @@ export class AuthController {
   async logout(@Req() req: RequestWithUser, @Res() res: Response) {
     const invalidCookie = this.authService.destroyCookie();
     res.setHeader('Set-Cookie', invalidCookie);
+    // TODO: for now on frontend
     return res.sendStatus(200);
   }
 
