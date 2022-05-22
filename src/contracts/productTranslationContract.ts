@@ -58,6 +58,7 @@ export class ProductTranslationContract {
       });
       const prepairedProduct = queryRunner.manager.create(Product, productToDB);
       prepairedProduct.series = series;
+      prepairedProduct.seriesName = series.seriesName;
       const [addedProduct] = await queryRunner.manager.save([prepairedProduct]);
       series.products.push(addedProduct);
       await queryRunner.manager.save(series);

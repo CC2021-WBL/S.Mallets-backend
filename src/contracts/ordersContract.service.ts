@@ -26,6 +26,8 @@ export class OrdersContract {
           Product,
           item.productId,
         );
+
+        //TODO bez ładowania zdjęć
         if (product) {
           const prepairedOrderDetails = queryRunner.manager.create(
             OrderDetails,

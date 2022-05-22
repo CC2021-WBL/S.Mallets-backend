@@ -29,7 +29,7 @@ export class CreateProductDto {
   productDescription!: UpdateTranslationDto;
 
   @ApiProperty({
-    description: 'Price for pair in EUR currency',
+    description: 'Price by one mallet in EUR currency',
   })
   @IsNumber()
   @IsNotEmpty()

@@ -65,6 +65,9 @@ export class Product {
   @ManyToOne(() => Series, (series) => series.products)
   series: Series;
 
+  @Column()
+  seriesName: string;
+
   @UpdateDateColumn()
   modifiedAt!: Date;
 

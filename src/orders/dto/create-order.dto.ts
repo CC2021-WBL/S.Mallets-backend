@@ -24,13 +24,11 @@ export class CreateOrderDto {
   messageFromUser?: string;
 
   @ApiProperty({
-    description: 'Reference to delivery',
-    default: '0a78645f-f742-4da1-b98f-45a13ecc6de8',
-    type: () => Delivery,
+    description: 'Delivery ID',
   })
   @IsString()
   @IsNotEmpty()
-  delivery!: Delivery;
+  deliveryId: number;
 
   @IsString()
   @IsNotEmpty()
