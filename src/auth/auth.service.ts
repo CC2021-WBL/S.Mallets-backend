@@ -48,7 +48,7 @@ export class AuthService {
     // };
     return `jwt=${jwt}; SameSite=None; Secure; HttpOnly; Max-Age=${this.configService.get(
       'JWT_EXPIRATION_TIME',
-    )};`;
+    )}`;
   }
 
   async register(userData: CreateUserDto): Promise<User> {
