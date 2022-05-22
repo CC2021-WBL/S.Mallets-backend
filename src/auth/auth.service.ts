@@ -46,9 +46,10 @@ export class AuthService {
     //     maxAge: this.configService.get('JWT_EXPIRATION_TIME'),
     //   },
     // };
-    return `jwt=${jwt}`;
+    return jwt;
   }
 
+  // TODO: update with jwt
   async register(userData: CreateUserDto): Promise<User> {
     try {
       const hash = await genPassword(userData.password);

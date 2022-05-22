@@ -44,6 +44,7 @@ export class AuthController {
   async logout(@Req() req: RequestWithUser, @Res() res: Response) {
     const invalidCookie = this.authService.destroyCookie();
     res.setHeader('Set-Cookie', invalidCookie);
+    // TODO: for now on frontend
     return res.sendStatus(200);
   }
 
