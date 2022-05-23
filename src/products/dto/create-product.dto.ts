@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
-  IsBase64,
   IsNotEmpty,
   IsNumber,
   IsObject,
@@ -21,7 +20,7 @@ export class CreateProductDto {
   productModel: string;
 
   @ApiProperty({
-    description: 'Description as object in polish and english',
+    description: `Object with 'pl' and 'en' properties, which contains description of a product in that language`,
   })
   @IsObject()
   @ValidateNested()
@@ -64,7 +63,8 @@ export class CreateProductDto {
   productImages: string[];
 
   @ApiProperty({
-    description: 'Alt text for images in polish and englis as object',
+    description:
+      'Alt text for images in polish and english as object - UpdateTranslationDto',
   })
   @IsObject()
   @ValidateNested()

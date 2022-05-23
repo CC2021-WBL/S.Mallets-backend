@@ -15,7 +15,9 @@ import { Role } from '../auth/types/role.enum';
 import { Roles } from '../decorators/roles.decorators';
 import { RolesGuard } from './../auth/guards/roles.guards';
 import { SeriesService } from './series.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('series')
 @Controller('series')
 export class SeriesController {
   constructor(

@@ -16,7 +16,9 @@ import { Roles } from '../decorators/roles.decorators';
 
 import { TranslationsService } from './translations.service';
 import { RolesGuard } from '../auth/guards/roles.guards';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('translations')
 @Controller('translations')
 export class TranslationsController {
   constructor(private readonly translationsService: TranslationsService) {}

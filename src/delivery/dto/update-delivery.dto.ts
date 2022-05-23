@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsNumber,
@@ -8,21 +8,27 @@ import {
 } from 'class-validator';
 
 export class UpdateDeliveryDto {
-  @ApiProperty()
+  @ApiPropertyOptional({
+    description: `Name of delivery option`,
+  })
   @IsNotEmpty()
   @IsString()
   @IsOptional()
   @Length(2, 50)
   deliveryName?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional({
+    description: `Area where that option of delivery is possible`,
+  })
   @IsNotEmpty()
   @IsString()
   @Length(2, 50)
   @IsOptional()
   deliveryArea?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional({
+    description: 'Price for the delivery ine EUR currency',
+  })
   @IsNumber()
   @IsNotEmpty()
   @IsOptional()

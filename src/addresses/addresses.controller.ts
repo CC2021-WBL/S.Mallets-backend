@@ -22,6 +22,8 @@ import { RolesGuard } from '../auth/guards/roles.guards';
 import RequestWithUser from '../auth/types/requestWithUser.interface';
 import { AddressUserContract } from './../contracts/addressUserContract.service';
 import { User } from '../users/user.entity';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('addresses')
 @Controller('addresses')
 export class AddressesController {
   constructor(

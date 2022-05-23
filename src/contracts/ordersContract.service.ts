@@ -6,6 +6,9 @@ import { CreateOrderDto } from './../orders/dto/create-order.dto';
 import { InjectConnection } from '@nestjs/typeorm';
 import { Product } from '../products/product.entity';
 import { OrderDetails } from '../order-details/order-details.entity';
+import { Delivery } from '../delivery/delivery.entity';
+import { Order } from '../orders/order.entity';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class OrdersContract {
@@ -16,18 +19,23 @@ export class OrdersContract {
   async createOrder(
     orderedProducts: CreateOrderDetailsDto[],
     orderSummary: CreateOrderDto,
+    userId: string,
   ) {
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
+    let finalPrice = 0;
     try {
-      const addedOrderDetailsArr = orderedProducts.map(async (item) => {
+      const chosenDelivery = await queryRunner.manager.findOneOrFail(
+        Delivery,
+        orderSummary.deliveryId,
+      );
+      const OrderDetPromises = orderedProducts.map(async (item) => {
         const product = await queryRunner.manager.findOne(
           Product,
           item.productId,
         );
 
-        //TODO bez ładowania zdjęć
         if (product) {
           const prepairedOrderDetails = queryRunner.manager.create(
             OrderDetails,
@@ -40,17 +48,31 @@ export class OrdersContract {
             prepairedOrderDetails,
           );
           if (addedOrderDetails) {
+            finalPrice += addedOrderDetails.quantity * product.price;
             return addedOrderDetails;
           }
         }
       });
-    } catch (error) {
+      const addedOrderDetails: OrderDetails[] = [];
+      OrderDetPromises.forEach((promise) => {
+        Promise.resolve(promise).then((value) => addedOrderDetails.push(value));
+      });
+      const order = queryRunner.manager.create(Order, {
+        finalCostEuro: finalPrice,
+        delivery: chosenDelivery,
+        orderDetails: addedOrderDetails,
+        ...orderSummary,
+      });
+      const addedOrder = await queryRunner.manager.save(Order, order);
+      if (userId) {
+        const user = await queryRunner.manager.findOne(User, userId);
+        user.orders.push(addedOrder);
+      }
+      return addedOrder;
+    } catch (error: any) {
       await queryRunner.rollbackTransaction();
       console.log(error);
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error.Message, HttpStatus.INTERNAL_SERVER_ERROR);
     } finally {
       await queryRunner.release();
     }
