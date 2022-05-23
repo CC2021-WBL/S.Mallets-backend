@@ -7,6 +7,7 @@ import {
   IsNumberString,
   IsString,
   Length,
+  MaxLength,
 } from 'class-validator';
 
 import { CreateOrderDetailsDto } from '../../order-details/dto/create-order-details.dto';
@@ -23,6 +24,7 @@ export class CreateOrderDto {
     description: 'Message from user',
     default: 'Please gift this as a gift',
   })
+  @MaxLength(120)
   messageFromUser?: string;
 
   @ApiProperty({
@@ -45,7 +47,7 @@ export class CreateOrderDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Length(2, 50)
+  @Length(2, 15)
   name: string;
 
   @ApiProperty({
@@ -54,7 +56,7 @@ export class CreateOrderDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Length(2, 50)
+  @Length(2, 20)
   lastname: string;
 
   @ApiProperty({
@@ -87,7 +89,7 @@ export class CreateOrderDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Length(1, 70)
+  @Length(2, 70)
   city: string;
 
   @ApiProperty({

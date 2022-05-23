@@ -3,8 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './order.entity';
 import { OrderStatusTypes } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
-import { PrepairedOrderType } from './dto/prepaired-order';
 
 @Injectable()
 export class OrdersService {
@@ -34,18 +32,6 @@ export class OrdersService {
       throw new HttpException('Not found current order', HttpStatus.NOT_FOUND);
     }
     return order;
-  }
-
-  async addOrder(order: PrepairedOrderType): Promise<Order> {
-    const prepairedOrder = await this.ordersRepository.create(order);
-    const newOrder = await this.ordersRepository.save(prepairedOrder);
-    if (newOrder) {
-      return newOrder;
-    }
-    throw new HttpException(
-      'Server problem with your order, contact directly with producent',
-      HttpStatus.INTERNAL_SERVER_ERROR,
-    );
   }
 
   // async updateOrder(id, order: UpdateOrderDto) {

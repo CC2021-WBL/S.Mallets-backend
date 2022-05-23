@@ -6,18 +6,15 @@ import {
   Param,
   Patch,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { Roles } from '../decorators/roles.decorators';
 import { Role } from '../auth/types/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guards';
 import { OrdersContract } from '../contracts/ordersContract.service';
-import RequestWithUser from '../auth/types/requestWithUser.interface';
 import { Order } from './order.entity';
 
 @ApiTags('orders')

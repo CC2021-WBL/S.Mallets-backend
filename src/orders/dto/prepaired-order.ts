@@ -10,13 +10,16 @@ import {
 
 import { Delivery } from '../../delivery/delivery.entity';
 import { OrderDetails } from '../../order-details/order-details.entity';
+import { User } from '../../users/user.entity';
 
 export class PrepairedOrderType {
   @IsString()
   messageFromUser?: string;
 
   @IsArray()
-  orderDetails: OrderDetails[];
+  orderDetails?: OrderDetails[];
+
+  user?: User;
 
   delivery: Delivery;
 
