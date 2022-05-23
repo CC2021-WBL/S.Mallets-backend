@@ -44,6 +44,7 @@ export class User {
   address?: Address;
 
   @OneToMany(() => Order, (order) => order.delivery)
+  @Column('simple-array', { array: true, default: [] })
   orders: Order[];
 
   @Column()

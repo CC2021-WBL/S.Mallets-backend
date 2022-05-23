@@ -43,8 +43,15 @@ export class UsersController {
     userWithAddress.hash = undefined;
     return userWithAddress;
   }
-
+  @Get('orders')
+  @Roles(Role.User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
+  async getUsersOrders(@Req() req: RequestWithUser) {
+    const usersOrders = await this.usersService.getUsersOrders(req.user.id);
+    return usersOrders;
+  }
+
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async updateUser(@Param('id') id: string, @Body() userData: UpdateUserDto) {
