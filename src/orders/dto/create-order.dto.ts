@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsEmail,
+  IsInt,
   IsNotEmpty,
   IsNumberString,
   IsString,
@@ -25,14 +26,22 @@ export class CreateOrderDto {
   messageFromUser?: string;
 
   @ApiProperty({
-    description: 'Delivery ID',
+    description: 'Id of logged user',
+    default: 'f2cc34f4-b02e-4e36-ab1b-5fdbddd451ca',
   })
-  @IsString()
+  userId?: string;
+
+  @ApiProperty({
+    description: 'Delivery ID',
+    default: 1,
+  })
+  @IsInt()
   @IsNotEmpty()
   deliveryId: number;
 
   @ApiProperty({
     description: `Client's name`,
+    default: 'Matylda',
   })
   @IsString()
   @IsNotEmpty()
@@ -41,6 +50,7 @@ export class CreateOrderDto {
 
   @ApiProperty({
     description: `Client's last name`,
+    default: 'Borutka',
   })
   @IsString()
   @IsNotEmpty()
@@ -49,12 +59,14 @@ export class CreateOrderDto {
 
   @ApiProperty({
     description: `Client's email`,
+    default: 'matylda@op.pl',
   })
   @IsEmail()
   email: string;
 
   @ApiProperty({
     description: `Client's phone number`,
+    default: '0048601729567',
   })
   @IsNumberString()
   @Length(7, 20)
@@ -62,6 +74,7 @@ export class CreateOrderDto {
 
   @ApiProperty({
     description: `Delivery address - country`,
+    default: 'Polska',
   })
   @IsString()
   @IsNotEmpty()
@@ -70,6 +83,7 @@ export class CreateOrderDto {
 
   @ApiProperty({
     description: `Delivery address - city`,
+    default: 'Bojano',
   })
   @IsString()
   @IsNotEmpty()
@@ -78,14 +92,16 @@ export class CreateOrderDto {
 
   @ApiProperty({
     description: `Delivery address - name of a street and number of house`,
+    default: 'Rolnicza 11',
   })
   @IsString()
   @IsNotEmpty()
-  @Length(1, 10)
+  @Length(1, 60)
   streetAndNumber: string;
 
   @ApiProperty({
     description: `Delivery address - zip code`,
+    default: '80-222',
   })
   @IsString()
   @IsNotEmpty()
@@ -94,6 +110,15 @@ export class CreateOrderDto {
 
   @ApiProperty({
     description: `Array of ordered products`,
+    default: [
+      {
+        productId: 1,
+        quantity: 2,
+        headDiameter: 36,
+        stickLength: 39,
+        weight: 30,
+      },
+    ],
   })
   @IsArray()
   orderedProducts: CreateOrderDetailsDto[];

@@ -1,3 +1,4 @@
+import { OrderDetailsService } from './../order-details/order-details.service';
 import { Connection } from 'typeorm';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
@@ -9,18 +10,18 @@ import { OrderDetails } from '../order-details/order-details.entity';
 import { Delivery } from '../delivery/delivery.entity';
 import { Order } from '../orders/order.entity';
 import { User } from '../users/user.entity';
+import { reduceToEntityFields } from '../orders/utils/orderObjectTools';
+import { OrdersService } from '../orders/orders.service';
 
 @Injectable()
 export class OrdersContract {
   constructor(
     @InjectConnection()
     private readonly connection: Connection,
+    private readonly orderDetailsService: OrderDetailsService,
+    private readonly ordersService: OrdersService,
   ) {}
-  async createOrder(
-    orderedProducts: CreateOrderDetailsDto[],
-    orderSummary: CreateOrderDto,
-    userId: string,
-  ) {
+  async createOrder(orderSummary: CreateOrderDto, userId?: string) {
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -30,43 +31,29 @@ export class OrdersContract {
         Delivery,
         orderSummary.deliveryId,
       );
-      const OrderDetPromises = orderedProducts.map(async (item) => {
-        const product = await queryRunner.manager.findOne(
-          Product,
-          item.productId,
-        );
+      const orderDetails: OrderDetails[] = [];
+      for (const item of orderSummary.orderedProducts) {
+        const addedOrderDetails =
+          await this.orderDetailsService.addOrderedProduct(item);
 
-        if (product) {
-          const prepairedOrderDetails = queryRunner.manager.create(
-            OrderDetails,
-            {
-              product: product,
-              ...item,
-            },
-          );
-          const addedOrderDetails = await queryRunner.manager.save(
-            prepairedOrderDetails,
-          );
-          if (addedOrderDetails) {
-            finalPrice += addedOrderDetails.quantity * product.price;
-            return addedOrderDetails;
-          }
+        if (addedOrderDetails) {
+          finalPrice +=
+            addedOrderDetails.quantity * addedOrderDetails.product.price;
+          orderDetails.push(addedOrderDetails);
         }
-      });
-      const addedOrderDetails: OrderDetails[] = [];
-      OrderDetPromises.forEach((promise) => {
-        Promise.resolve(promise).then((value) => addedOrderDetails.push(value));
-      });
-      const order = queryRunner.manager.create(Order, {
+      }
+      const order = reduceToEntityFields(orderSummary);
+      const addedOrder = await this.ordersService.addOrder({
         finalCostEuro: finalPrice,
         delivery: chosenDelivery,
-        orderDetails: addedOrderDetails,
-        ...orderSummary,
+        orderDetails: orderDetails,
+        ...order,
       });
-      const addedOrder = await queryRunner.manager.save(Order, order);
+
       if (userId) {
         const user = await queryRunner.manager.findOne(User, userId);
         user.orders.push(addedOrder);
+        await queryRunner.manager.save(user);
       }
       return addedOrder;
     } catch (error: any) {

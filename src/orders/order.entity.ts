@@ -62,10 +62,6 @@ export class Order {
   city: string;
 
   @Column()
-  @Length(1, 70)
-  street: string;
-
-  @Column()
   @Length(1, 10)
   streetAndNumber: string;
 

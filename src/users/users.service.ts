@@ -62,10 +62,10 @@ export class UsersService {
   }
 
   async findOneById(id: string) {
+    console.log(id);
     const user = await this.usersRepository
       .createQueryBuilder('user')
       .where('user.id = :id', { id: id })
-      .loadAllRelationIds()
       .getOne();
     if (!user) {
       throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
@@ -105,6 +105,19 @@ export class UsersService {
       .getOne();
     if (userWithAddress) {
       return userWithAddress;
+    }
+    throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
+  }
+
+  async getUsersOrders(id: string) {
+    console.log(id);
+    const usersOrders = await this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id: id })
+      .leftJoinAndSelect('user.orders', 'orders')
+      .getOne();
+    if (usersOrders) {
+      return usersOrders;
     }
     throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
   }
