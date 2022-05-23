@@ -14,9 +14,11 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import { ProductsService } from './products.service';
 import { RolesGuard } from './../auth/guards/roles.guards';
+import { ApiTags } from '@nestjs/swagger';
 import { TranslationsService } from './../translations/translations.service';
 import { ProductTranslationContract } from '../contracts/productTranslationContract';
 
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
   constructor(
@@ -32,11 +34,11 @@ export class ProductsController {
     @Param('seriesId', ParseIntPipe) seriesId: number,
     @Body() productData: CreateProductDto,
   ) {
-    const addedProduct = await this.productTranslationContract.createProduct(
+    const isProductAdded = await this.productTranslationContract.createProduct(
       productData,
       seriesId,
     );
-    return addedProduct;
+    return isProductAdded;
   }
 
   @Get()

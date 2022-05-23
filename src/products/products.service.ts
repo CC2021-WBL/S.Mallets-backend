@@ -1,5 +1,10 @@
 import { Product } from './product.entity';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -18,7 +23,15 @@ export class ProductsService {
   }
 
   async getAllProducts() {
-    return this.productRepository.find();
+    const products = await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.productDescription', 'description')
+      .leftJoinAndSelect('product.productAltText', 'alt')
+      .getMany();
+    if (products) {
+      return products;
+    }
+    throw new HttpException('Something went wrong', HttpStatus.NOT_FOUND);
   }
 
   async getSingleProduct(prodId: number) {

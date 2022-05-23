@@ -14,8 +14,10 @@ import {
 
 import { AuthService } from './auth.service';
 import RequestWithUser from './types/requestWithUser.interface';
-import { CookieOptions, Response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

@@ -4,13 +4,15 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { IsBase64, IsNumber, IsString } from 'class-validator';
 
-import { Series } from './../series/series.entity';
+import { OrderDetails } from '../order-details/order-details.entity';
+import { Series } from '../series/series.entity';
 import { Translation } from '../translations/translation.entity';
 
 @Entity('products')
@@ -51,10 +53,10 @@ export class Product {
   weight: number;
 
   @Column({
-    type: 'text',
+    type: 'simple-array',
+    default: [],
   })
-  @IsBase64()
-  productImage: string;
+  productImages: string[];
 
   @OneToOne(() => Translation)
   @JoinColumn()
@@ -62,6 +64,9 @@ export class Product {
 
   @ManyToOne(() => Series, (series) => series.products)
   series: Series;
+
+  @Column()
+  seriesName: string;
 
   @UpdateDateColumn()
   modifiedAt!: Date;

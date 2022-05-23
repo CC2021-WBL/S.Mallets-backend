@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -10,6 +11,7 @@ import {
 import { IsEmail, IsNumberString, Length } from 'class-validator';
 
 import { Address } from '../addresses/address.entity';
+import { Order } from '../orders/order.entity';
 import { Role } from '../auth/types/role.enum';
 
 @Entity('users')
@@ -40,6 +42,9 @@ export class User {
   @OneToOne(() => Address)
   @JoinColumn()
   address?: Address;
+
+  @OneToMany(() => Order, (order) => order.delivery)
+  orders: Order[];
 
   @Column()
   hash: string;

@@ -58,15 +58,13 @@ export class ProductTranslationContract {
       });
       const prepairedProduct = queryRunner.manager.create(Product, productToDB);
       prepairedProduct.series = series;
+      prepairedProduct.seriesName = series.seriesName;
       const [addedProduct] = await queryRunner.manager.save([prepairedProduct]);
-      await queryRunner.manager
-        .createQueryBuilder()
-        .relation(Series, 'products')
-        .of(series)
-        .add(addedProduct);
+      series.products.push(addedProduct);
+      await queryRunner.manager.save(series);
 
       await queryRunner.commitTransaction();
-      return addedProduct;
+      return true;
     } catch (error) {
       await queryRunner.rollbackTransaction();
       console.log(error);

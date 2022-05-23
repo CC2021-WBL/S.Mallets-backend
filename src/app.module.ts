@@ -8,6 +8,8 @@ import { AddressesModule } from './addresses/addresses.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
+import { DeliveryModule } from './delivery/delivery.module';
+import { OrderDetailsModule } from './order-details/order-details.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { SeriesModule } from './series/series.module';
@@ -20,7 +22,6 @@ import { UsersModule } from './users/users.module';
     AuthModule,
     UsersModule,
     ThrottlerModule.forRoot({ ttl: 60, limit: 20 }),
-    OrdersModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         DB_HOST_NAME: Joi.string().required(),
@@ -36,6 +37,10 @@ import { UsersModule } from './users/users.module';
     }),
     AddressesModule,
     DatabaseModule,
+    DeliveryModule,
+    OrdersModule,
+    OrderDetailsModule,
+    ProductsModule,
     SeriesModule,
     TranslationsModule,
   ],

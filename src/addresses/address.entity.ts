@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Length } from 'class-validator';
+
+import { Order } from '../orders/order.entity';
 
 @Entity('addresses')
 export class Address {
