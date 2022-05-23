@@ -1,40 +1,57 @@
-import { OrderDetailsService } from './../order-details/order-details.service';
+import { User } from './../users/user.entity';
 import { Connection } from 'typeorm';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
-import { CreateOrderDetailsDto } from './../order-details/dto/create-order-details.dto';
-import { CreateOrderDto } from './../orders/dto/create-order.dto';
+import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { InjectConnection } from '@nestjs/typeorm';
-import { Product } from '../products/product.entity';
 import { OrderDetails } from '../order-details/order-details.entity';
 import { Delivery } from '../delivery/delivery.entity';
-import { Order } from '../orders/order.entity';
-import { User } from '../users/user.entity';
-import { reduceToEntityFields } from '../orders/utils/orderObjectTools';
-import { OrdersService } from '../orders/orders.service';
+import { UsersService } from '../users/users.service';
+import { addOrder, addOrderedProduct } from './tools/orderContract.components';
 
 @Injectable()
 export class OrdersContract {
   constructor(
     @InjectConnection()
     private readonly connection: Connection,
-    private readonly orderDetailsService: OrderDetailsService,
-    private readonly ordersService: OrdersService,
+    private readonly usersService: UsersService,
   ) {}
   async createOrder(orderSummary: CreateOrderDto, userId?: string) {
     const queryRunner = this.connection.createQueryRunner();
+
+    let user: User | null = null;
+    if (userId) {
+      const gettedUser = await this.usersService.getUserWithOrders(userId);
+      user = gettedUser;
+    }
+
     await queryRunner.connect();
     await queryRunner.startTransaction();
+
     let finalPrice = 0;
+
     try {
       const chosenDelivery = await queryRunner.manager.findOneOrFail(
         Delivery,
         orderSummary.deliveryId,
       );
+
+      const addedOrder = await addOrder(
+        {
+          finalCostEuro: finalPrice,
+          delivery: chosenDelivery,
+          user: user,
+          ...orderSummary,
+        },
+        queryRunner,
+      );
       const orderDetails: OrderDetails[] = [];
       for (const item of orderSummary.orderedProducts) {
-        const addedOrderDetails =
-          await this.orderDetailsService.addOrderedProduct(item);
+        const addedOrderDetails = await addOrderedProduct(
+          item,
+          addedOrder,
+          queryRunner,
+        );
 
         if (addedOrderDetails) {
           finalPrice +=
@@ -42,20 +59,20 @@ export class OrdersContract {
           orderDetails.push(addedOrderDetails);
         }
       }
-      const order = reduceToEntityFields(orderSummary);
-      const addedOrder = await this.ordersService.addOrder({
-        finalCostEuro: finalPrice,
-        delivery: chosenDelivery,
-        orderDetails: orderDetails,
-        ...order,
-      });
+      addedOrder.orderDetails = orderDetails;
+      addedOrder.finalCostEuro = finalPrice;
+      const updatedOrder = await queryRunner.manager.save(addedOrder);
 
-      if (userId) {
-        const user = await queryRunner.manager.findOne(User, userId);
-        user.orders.push(addedOrder);
-        await queryRunner.manager.save(user);
+      if (user) {
+        await queryRunner.manager
+          .createQueryBuilder()
+          .relation(User, 'orders')
+          .of(user.id)
+          .add(updatedOrder.id);
       }
-      return addedOrder;
+
+      await queryRunner.commitTransaction();
+      return updatedOrder;
     } catch (error: any) {
       await queryRunner.rollbackTransaction();
       console.log(error);

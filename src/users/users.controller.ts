@@ -48,7 +48,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
   async getUsersOrders(@Req() req: RequestWithUser) {
-    const usersOrders = await this.usersService.getUsersOrders(req.user.id);
+    const usersOrders = await this.usersService.getUserWithOrders(req.user.id);
     return usersOrders;
   }
 

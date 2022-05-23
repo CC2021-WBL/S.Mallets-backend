@@ -11,6 +11,7 @@ import { OrdersService } from './orders.service';
 import { Product } from '../products/product.entity';
 import { ProductsService } from '../products/products.service';
 import { User } from '../users/user.entity';
+import { UsersService } from '../users/users.service';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { User } from '../users/user.entity';
     OrdersContract,
     OrderDetailsService,
     ProductsService,
+    UsersService,
   ],
 })
 export class OrdersModule {}

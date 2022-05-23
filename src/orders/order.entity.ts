@@ -12,6 +12,7 @@ import { IsEmail, IsNumberString, Length } from 'class-validator';
 import { Delivery } from '../delivery/delivery.entity';
 import { OrderDetails } from '../order-details/order-details.entity';
 import { OrderStatusTypes } from './dto/create-order.dto';
+import { User } from '../users/user.entity';
 
 @Entity('orders')
 export class Order {
@@ -71,6 +72,9 @@ export class Order {
 
   @ManyToOne(() => Delivery)
   delivery!: Delivery;
+
+  @ManyToOne(() => User, (user) => user.orders)
+  user?: User;
 
   @OneToMany(() => OrderDetails, (orderDetails) => orderDetails.order)
   orderDetails?: OrderDetails[];

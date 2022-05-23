@@ -43,7 +43,7 @@ export class User {
   @JoinColumn()
   address?: Address;
 
-  @OneToMany(() => Order, (order) => order.delivery)
+  @OneToMany(() => Order, (order) => order.user)
   @Column('simple-array', { array: true, default: [] })
   orders: Order[];
 

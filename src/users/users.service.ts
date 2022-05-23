@@ -62,7 +62,6 @@ export class UsersService {
   }
 
   async findOneById(id: string) {
-    console.log(id);
     const user = await this.usersRepository
       .createQueryBuilder('user')
       .where('user.id = :id', { id: id })
@@ -109,8 +108,7 @@ export class UsersService {
     throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
   }
 
-  async getUsersOrders(id: string) {
-    console.log(id);
+  async getUserWithOrders(id: string) {
     const usersOrders = await this.usersRepository
       .createQueryBuilder('user')
       .where('user.id = :id', { id: id })
