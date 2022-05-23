@@ -54,6 +54,8 @@ export class OrdersController {
   }
 
   @Patch(':id/order-status')
+  @Roles(Role.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async changeOrderStatus(@Param('id') id: string) {
     return await this.ordersService.changeOrderStatus(id);
   }
