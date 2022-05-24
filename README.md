@@ -35,9 +35,10 @@ User can:
 
 ### Links
 
+- [Swagger](https://s-mallets-backend.vercel.app/api/#/)
 - [Demo](https://s-mallets-frontend.vercel.app/)
 - [Design](https://www.figma.com/file/GUgGbIYMb28LwIPjgdHGmc/Smallets?node-id=183%3A3518)
-- [Backend part](https://github.com/CC2021-WBL/S.Mallets-backend)
+- [Frontend part](https://github.com/CC2021-WBL/S.Mallets-frontend)
 
 ## Process
 
