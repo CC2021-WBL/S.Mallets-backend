@@ -5,7 +5,7 @@
 # CodersCamp 2021 - Fullstack Project- Backend Part
 **CodersCamp (https://www.coderscamp.edu.pl/) - Biggest free programming course** 
 
-## Smallets Shop
+## S.Mallets Online Shop
 
 This is our last team task on course. We want to help our friend with selling sticks so we decided to do online shop with mallets.
 
