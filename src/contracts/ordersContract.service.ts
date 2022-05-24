@@ -28,13 +28,12 @@ export class OrdersContract {
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
-    let finalPrice = 0;
-
     try {
       const chosenDelivery = await queryRunner.manager.findOneOrFail(
         Delivery,
         orderSummary.deliveryId,
       );
+      let finalPrice = chosenDelivery.deliveryPriceEuro;
 
       const addedOrder = await addOrder(
         {
