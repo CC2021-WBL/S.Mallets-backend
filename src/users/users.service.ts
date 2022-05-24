@@ -119,4 +119,17 @@ export class UsersService {
     }
     throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
   }
+
+  async getUserWithRelations(id: string) {
+    const completeUser = await this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id: id })
+      .leftJoinAndSelect('user.address', 'addresses')
+      .leftJoinAndSelect('user.orders', 'orders')
+      .getOne();
+    if (completeUser) {
+      return completeUser;
+    }
+    throw new HttpException('Not found user', HttpStatus.NOT_FOUND);
+  }
 }

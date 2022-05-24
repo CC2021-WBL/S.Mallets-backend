@@ -52,6 +52,17 @@ export class UsersController {
     return usersOrders;
   }
 
+  @Get('complete')
+  @Roles(Role.User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Patch(':id')
+  async getCompleteUser(@Req() req: RequestWithUser) {
+    const usersOrders = await this.usersService.getUserWithRelations(
+      req.user.id,
+    );
+    return usersOrders;
+  }
+
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async updateUser(@Param('id') id: string, @Body() userData: UpdateUserDto) {

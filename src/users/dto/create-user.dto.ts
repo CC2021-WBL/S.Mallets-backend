@@ -28,7 +28,7 @@ export class CreateUserDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Length(2, 50)
+  @Length(2, 15)
   name: string;
 
   @ApiProperty({
@@ -36,7 +36,7 @@ export class CreateUserDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Length(2, 50)
+  @Length(2, 20)
   lastname: string;
 
   @ApiProperty({

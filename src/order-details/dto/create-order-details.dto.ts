@@ -13,6 +13,7 @@ import { Ranges } from '../../utils/ranges';
 export class CreateOrderDetailsDto {
   @ApiProperty({
     description: `ID of ordered product`,
+    default: 1,
   })
   @IsInt()
   @IsNotEmpty()
@@ -21,6 +22,7 @@ export class CreateOrderDetailsDto {
 
   @ApiProperty({
     description: `Amount of that kind of mallets to order`,
+    default: 2,
   })
   @IsInt()
   @IsNotEmpty()
@@ -30,6 +32,7 @@ export class CreateOrderDetailsDto {
 
   @ApiProperty({
     description: `Chosen head diameter, range: 30-49mm`,
+    default: 35,
   })
   @IsNumber()
   @IsNotEmpty()
@@ -39,6 +42,7 @@ export class CreateOrderDetailsDto {
 
   @ApiProperty({
     description: `Chosen stick length, range: 35-39cm`,
+    default: 36,
   })
   @IsNumber()
   @IsNotEmpty()
@@ -48,6 +52,7 @@ export class CreateOrderDetailsDto {
 
   @ApiProperty({
     description: `Chosen weight, range: 29-37`,
+    default: 33,
   })
   @IsNumber()
   @IsNotEmpty()
