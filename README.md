@@ -44,17 +44,18 @@ User can:
 
 ### Built with
 
-- wypiszcie
-- sobie 
-- sami :P
+- Nest.js
+- TypeORM
+- Passport
+- Azure Database for PostgreSQL
+- Swagger
 
 
 ### Continued development
 
 Ours ideas for future:
-- admin account
-- link the payments
-- dark mode
+- connection with delivery companies APIs
+- payment handling
 
 ## Authors
 
