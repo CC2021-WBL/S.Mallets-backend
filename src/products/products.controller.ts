@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -17,6 +18,7 @@ import { RolesGuard } from './../auth/guards/roles.guards';
 import { ApiTags } from '@nestjs/swagger';
 import { TranslationsService } from './../translations/translations.service';
 import { ProductTranslationContract } from '../contracts/productTranslationContract';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @ApiTags('products')
 @Controller('products')
@@ -51,5 +53,19 @@ export class ProductsController {
   async getSingleProduct(@Param('prodId', ParseIntPipe) prodId: number) {
     const product = await this.productsService.getSingleProduct(prodId);
     return product;
+  }
+
+  @Patch(':prodId')
+  @Roles(Role.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async updateProduct(
+    @Param('prodId', ParseIntPipe) prodId: number,
+    @Body() data: UpdateProductDto,
+  ) {
+    const updatedProduct = await this.productsService.updateProduct(
+      prodId,
+      data,
+    );
+    return updatedProduct;
   }
 }

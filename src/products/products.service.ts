@@ -1,3 +1,4 @@
+import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './product.entity';
 import {
   Injectable,
@@ -37,6 +38,26 @@ export class ProductsService {
   async getSingleProduct(prodId: number) {
     const product = await this.findProductById(prodId);
     return { ...product };
+  }
+
+  async updateProduct(prodId: number, productData: UpdateProductDto) {
+    const product = await this.findProductById(prodId);
+    for (const key in productData) {
+      if (Object.prototype.hasOwnProperty.call(productData, key)) {
+        product[key] = productData[key];
+      }
+    }
+    const updatedUser = await this.productRepository.save(product);
+    if (!updatedUser) {
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.BAD_REQUEST,
+          error: 'Updating user failed',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return updatedUser;
   }
 
   private async findProductById(id: number) {
