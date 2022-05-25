@@ -71,6 +71,7 @@ Special thanks to our mentor, [Weronika Boszko Lucena](https://github.com/vierab
 ![image](https://user-images.githubusercontent.com/56206231/169923009-13da5abe-2725-4f80-a889-00bb2ef94329.png)
 ![image](https://user-images.githubusercontent.com/56206231/170298866-fa593fef-7615-4f3a-b287-e7e731b008a0.png)
 ![image](https://user-images.githubusercontent.com/56206231/170299070-679843bb-2769-42fc-a604-0ee27330b16b.png)
+![image](https://user-images.githubusercontent.com/56206231/170313789-2478c08f-7737-41fd-8bcf-8ba3377a5af3.png)
 
 
 
