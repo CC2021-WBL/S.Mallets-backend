@@ -19,6 +19,7 @@ import { Role } from '../auth/types/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guards';
 import { ApiTags } from '@nestjs/swagger';
 import RequestWithUser from '../auth/types/requestWithUser.interface';
+import { addStreetAndNumber } from '../utils/addStreetAndNumber';
 
 @ApiTags('users')
 @Controller('users')
@@ -41,7 +42,8 @@ export class UsersController {
       req.user.id,
     );
     userWithAddress.hash = undefined;
-    return userWithAddress;
+    const upgradedUser = addStreetAndNumber(userWithAddress);
+    return upgradedUser;
   }
   @Get('orders')
   @Roles(Role.User)
@@ -57,10 +59,11 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
   async getCompleteUser(@Req() req: RequestWithUser) {
-    const usersOrders = await this.usersService.getUserWithRelations(
+    const completeUser = await this.usersService.getUserWithRelations(
       req.user.id,
     );
-    return usersOrders;
+    const upgradedUser = addStreetAndNumber(completeUser);
+    return upgradedUser;
   }
 
   @Roles(Role.User)
