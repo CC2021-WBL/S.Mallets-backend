@@ -9,7 +9,7 @@ export function addStreetAndNumber(user: User): User | UpgradedUser {
       ...user.address,
     };
     delete user.address;
-    const upgradedUser = { ...updatedAddress, ...user };
+    const upgradedUser = { address: updatedAddress, ...user };
     return upgradedUser;
   }
   const upgradedUser = { ...user };
