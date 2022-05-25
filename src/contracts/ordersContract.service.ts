@@ -33,7 +33,7 @@ export class OrdersContract {
         Delivery,
         orderSummary.deliveryId,
       );
-      let finalPrice = chosenDelivery.deliveryPriceEuro;
+      let finalPrice: number = +chosenDelivery.deliveryPriceEuro;
 
       const addedOrder = await addOrder(
         {
@@ -53,8 +53,9 @@ export class OrdersContract {
         );
 
         if (addedOrderDetails) {
-          finalPrice +=
+          const productPrice =
             addedOrderDetails.quantity * addedOrderDetails.product.price;
+          finalPrice = finalPrice + productPrice;
           orderDetails.push(addedOrderDetails);
         }
       }
