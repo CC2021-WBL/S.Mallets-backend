@@ -6,6 +6,7 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { TokenPayload } from './types/tokenPayload.interface';
 import { User } from './../users/user.entity';
 import { UsersService } from './../users/users.service';
+import { addStreetAndNumber } from '../utils/addStreetAndNumber';
 import {
   changePasswordToHashInUserObj,
   genPassword,
@@ -24,7 +25,8 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
     const isValid = user && (await verifyPassword(password, user.hash));
     if (isValid) {
-      return user;
+      const updatedUser = addStreetAndNumber(user);
+      return updatedUser;
     }
     return null;
   }

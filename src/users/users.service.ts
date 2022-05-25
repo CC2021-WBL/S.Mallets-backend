@@ -73,8 +73,12 @@ export class UsersService {
     return user;
   }
 
-  async findByEmail(email: string) {
-    const user = await this.usersRepository.findOne({ email });
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.usersRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.address', 'addresses')
+      .where('user.email = :email', { email: email })
+      .getOne();
     if (user) {
       return user;
     }
