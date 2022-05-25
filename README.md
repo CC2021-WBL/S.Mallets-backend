@@ -5,7 +5,7 @@
 # CodersCamp 2021 - Fullstack Project- Backend Part
 **CodersCamp (https://www.coderscamp.edu.pl/) - Biggest free programming course** 
 
-## Smallets Shop
+## S.Mallets Online Shop
 
 This is our last team task on course. We want to help our friend with selling sticks so we decided to do online shop with mallets.
 
@@ -35,25 +35,27 @@ User can:
 
 ### Links
 
+- [Swagger](https://s-mallets-backend.vercel.app/api/#/)
 - [Demo](https://s-mallets-frontend.vercel.app/)
 - [Design](https://www.figma.com/file/GUgGbIYMb28LwIPjgdHGmc/Smallets?node-id=183%3A3518)
-- [Backend part](https://github.com/CC2021-WBL/S.Mallets-backend)
+- [Frontend part](https://github.com/CC2021-WBL/S.Mallets-frontend)
 
 ## Process
 
 ### Built with
 
-- wypiszcie
-- sobie 
-- sami :P
+- Nest.js
+- TypeORM
+- Passport
+- Azure Database for PostgreSQL
+- Swagger
 
 
 ### Continued development
 
 Ours ideas for future:
-- admin account
-- link the payments
-- dark mode
+- connection with delivery companies APIs
+- payment handling
 
 ## Authors
 
