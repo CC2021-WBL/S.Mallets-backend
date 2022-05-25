@@ -1,6 +1,7 @@
-![logo-devs-on-the-waves-stroke](https://user-images.githubusercontent.com/19845958/148255475-9f24bd68-7020-42e8-a0d7-c2ed885848e5.png)
-
-![image](https://user-images.githubusercontent.com/56206231/170011760-015dca37-7b16-4ed6-874f-a9cb0aab44ae.png)
+<div>
+<img src="https://user-images.githubusercontent.com/19845958/148255475-9f24bd68-7020-42e8-a0d7-c2ed885848e5.png" width="20%" height="20%" align="center">
+<img src="https://user-images.githubusercontent.com/56206231/170011760-015dca37-7b16-4ed6-874f-a9cb0aab44ae.png" width="28%" height="28%" align="center">
+</div>
 
 # CodersCamp 2021 - Fullstack Project- Backend Part
 **CodersCamp (https://www.coderscamp.edu.pl/) - Biggest free programming course** 
@@ -68,6 +69,8 @@ Special thanks to our mentor, [Weronika Boszko Lucena](https://github.com/vierab
 ### Screenshots
 ![image](https://user-images.githubusercontent.com/56206231/169922954-b868e6ca-6835-44eb-8fc6-aea5d886aac8.png)
 ![image](https://user-images.githubusercontent.com/56206231/169923009-13da5abe-2725-4f80-a889-00bb2ef94329.png)
+![image](https://user-images.githubusercontent.com/56206231/170298866-fa593fef-7615-4f3a-b287-e7e731b008a0.png)
+![image](https://user-images.githubusercontent.com/56206231/170299070-679843bb-2769-42fc-a604-0ee27330b16b.png)
 
 
 
