@@ -9,7 +9,8 @@ import {
 import { Product } from 'src/products/product.entity';
 
 import { Order } from '../orders/order.entity';
-import { Ranges } from '../utils/ranges';
+
+// import { Ranges } from '../utils/ranges';
 
 @Entity('order_details')
 export class OrderDetails {
@@ -29,7 +30,8 @@ export class OrderDetails {
   @Column({
     type: 'smallint',
   })
-  quantity: Ranges<1, 50>;
+  quantity: number;
+  //quantity: Ranges<1, 50>;
 
   @Column({
     name: 'head_diameter',

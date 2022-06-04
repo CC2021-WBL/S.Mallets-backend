@@ -8,12 +8,12 @@ import {
   Min,
 } from 'class-validator';
 
-import { Ranges } from '../../utils/ranges';
+// import { Ranges } from '../../utils/ranges';
 
 export class CreateOrderDetailsDto {
   @ApiProperty({
     description: `ID of ordered product`,
-    default: 1,
+    default: 6,
   })
   @IsInt()
   @IsNotEmpty()
@@ -28,7 +28,8 @@ export class CreateOrderDetailsDto {
   @IsNotEmpty()
   @Min(1)
   @Max(50)
-  quantity: Ranges<1, 50>;
+  quantity: number;
+  // quantity: Ranges<1, 50>;
 
   @ApiProperty({
     description: `Chosen head diameter, range: 30-49mm`,
